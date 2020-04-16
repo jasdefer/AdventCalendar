@@ -1,0 +1,20 @@
+﻿@page
+@model AdventCalendarWebApp.Pages.Helper.SetCustomTimeModel
+@{
+    ViewData["Title"] = "SetCustomTime";
+}
+<p class="text-justify">
+    Set the system time to one of the 24 dates in the current year.
+    This can be used to test access to different pages depending on the current time.
+    Current time: @Model.TimeProvider.Now()
+</p>
+@if (Model.Index.HasValue)
+{
+<div class="alert alert-success">The system time is now set to @AdventCalendarWebApp.Helper.TimeProvider.Dates.Doors2020[Model.Index.Value]</div>
+}
+<div class="btn-group-vertical d-block">
+    @for (int i = 0; i < 24; i++)
+    {
+        <a class="btn btn-secondary" asp-page="SetCustomTime" asp-route-index="@i">Set time to @AdventCalendarWebApp.Helper.TimeProvider.Dates.Doors2020[i]</a>
+    }
+</div>

@@ -1,0 +1,48 @@
+﻿@page
+@model AdventCalendarWebApp.Pages.InfoModel
+@{
+    ViewData["Title"] = "Info";
+}
+
+    <div class="row">
+        <div class="col-sm-12 col-lg-6 mt-2">
+            <div class="card">
+                <div class="card-header text-white bg-secondary">
+                    Version
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">@Model.Version</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-lg-6 mt-2">
+            <div class="card">
+                <div class="card-header text-white bg-secondary">
+                    Description
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">@Model.Description</h5>
+                </div>
+            </div>
+        </div>
+        @if(Model.ReleaseNotes.Length>0){
+        <div class="col-sm-12 col-lg-6 mt-2">
+            <div class="card">
+                <div class="card-header text-white bg-secondary">
+                    Release Notes
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">The lift of recent changes:</h5>
+                    <p class="card-text">
+                        <div class="list-group text-left">
+                            @foreach (var item in Model.ReleaseNotes)
+                            {
+                                <a href="#" class="list-group-item list-group-item-action">@item</a>
+                            }
+                        </div>
+                    </p>
+                </div>
+            </div>
+        </div>
+        }
+    </div>
