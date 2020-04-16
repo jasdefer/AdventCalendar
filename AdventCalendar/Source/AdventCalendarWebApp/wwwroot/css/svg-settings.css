@@ -6,12 +6,14 @@
     stroke-width: 0.2px;
 }
 
+a g > path {
+    fill: transparent;
+}
+
 a g:hover > path {
-    pointer-events: all;
     stroke: #424242;
 }
 
 a g:active > path {
-    pointer-events: all;
     stroke: #616161;
 }
