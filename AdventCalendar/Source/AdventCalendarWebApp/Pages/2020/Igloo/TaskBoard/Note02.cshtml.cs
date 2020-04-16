@@ -8,7 +8,7 @@ namespace AdventCalendarWebApp.Pages._2020.Igloo.TaskBoard
     public class Note02Model : PageModel
     {
         private readonly DayValidation dayValidation;
-        private const int door = 1;
+        private const int door = 2;
 
         public Note02Model(DayValidation dayValidation)
         {
