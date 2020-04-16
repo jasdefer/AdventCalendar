@@ -1,7 +1,6 @@
 ﻿using AdventCalendarWebApp.Helper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.ComponentModel.DataAnnotations;
 
 namespace AdventCalendarWebApp.Pages._2020.Igloo.EastWing
 {
@@ -34,7 +33,7 @@ namespace AdventCalendarWebApp.Pages._2020.Igloo.EastWing
             {
                 return Page();
             }
-            if (!dayValidation.HasAccess(0))
+            if (!dayValidation.HasAccess(1))
             {
                 ModelState.AddModelError(string.Empty, "Some magic inside the lock prevents it to be opened before the correct time has come.");
                 return Page();
