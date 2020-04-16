@@ -10,3 +10,8 @@ a g:hover > path {
     pointer-events: all;
     stroke: #424242;
 }
+
+a g:active > path {
+    pointer-events: all;
+    stroke: #616161;
+}

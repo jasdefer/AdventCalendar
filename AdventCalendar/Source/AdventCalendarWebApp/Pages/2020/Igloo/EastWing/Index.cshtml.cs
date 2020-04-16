@@ -20,7 +20,7 @@ namespace AdventCalendarWebApp.Pages._2020.Igloo.EastWing
             SolvedTheRiddle = solvedTheRiddle;
             var now = timeProvider.Now();
             if(SolvedTheRiddle ||
-                now >= Dates.Doors2020[1])
+                now >= Dates.Doors2020[2])
             {
                 DisplayHolidayLights = true;
             }

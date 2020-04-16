@@ -1,6 +1,5 @@
 ﻿using AdventCalendarWebApp.Helper.TimeProvider;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System;
 
 namespace AdventCalendarWebApp.Pages.Helper
 {
@@ -19,7 +18,7 @@ namespace AdventCalendarWebApp.Pages.Helper
             {
                 return;
             }
-            if(index<0 || index > 23)
+            if(index<0 || index > 24)
             {
                 index = 0;
             }

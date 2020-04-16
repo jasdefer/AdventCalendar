@@ -6,6 +6,7 @@ namespace AdventCalendarWebApp.Helper.TimeProvider
     {
         public static readonly DateTime[] Doors2020 = new DateTime[]
         {
+            new DateTime(2020, 11, 30),
             new DateTime(2020, 12, 1),
             new DateTime(2020, 12, 2),
             new DateTime(2020, 12, 3),
