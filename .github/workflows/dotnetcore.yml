@@ -1,0 +1,32 @@
+name: Publish to Azure
+
+on:
+  push:
+    branches: [ develop ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.101
+    - name: Install dependencies
+      run: dotnet restore AdventCalendar
+    - name: Build
+      run: dotnet build --configuration Release --no-restore AdventCalendar
+    - name: Test
+      run: dotnet test --no-restore --verbosity normal AdventCalendar
+    - name: Publish
+      run: |
+        dotnet publish -c Release -o dotnetcorewebapp AdventCalendar
+    - name: 'Run Azure webapp deploy action using publish profile credentials'
+      uses: azure/webapps-deploy@v1
+      with: 
+        app-name: AdventCalendarTest # Web app name on Azure
+        publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE_ADVENT_CALENDAR_TEST }}
+        package: './dotnetcorewebapp'
