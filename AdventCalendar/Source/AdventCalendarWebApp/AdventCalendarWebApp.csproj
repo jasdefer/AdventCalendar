@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -10,8 +10,11 @@
     <PackageId>AdventCalendarWebApp</PackageId>
     <Company />
     <Product>Advent Calendar</Product>
-    <Version>0.0.1</Version>
-    <PackageReleaseNotes></PackageReleaseNotes>
+    <Version>0.0.2</Version>
+    <PackageReleaseNotes>0.0.2
+Added the first 3 riddles and the core project infrastructure
+0.0.1
+Initial release</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
