@@ -77,26 +77,26 @@ namespace AdventCalendarWebApp.Pages._2020.Igloo.TaskBoard
             return false;
         }
 
-        public IActionResult OnGet(string[] selectedPresents)
+        public IActionResult OnGet(string[] answer)
         {
             if (!dayValidation.HasAccess(2))
             {
                 return RedirectToPage("Index", new { invalidDoor = door });
             }
             SetupSelectableList();
-            if (selectedPresents == null || selectedPresents.Length == 0)
+            if (answer == null || answer.Length == 0)
             {
                 return Page();
             }
-            if (IsBadRequest(selectedPresents))
+            if (IsBadRequest(answer))
             {
                 return BadRequest();
             }
-            if(selectedPresents.Distinct().Count() != Presents.Length)
+            if(answer.Distinct().Count() != Presents.Length)
             {
                 ModelState.AddModelError(string.Empty, "Each present must be in exactly one toy bag. It is not possible to store a single present in two toy bags.");
             }
-            if(IsCorrectSolution(selectedPresents))
+            else if(IsCorrectSolution(answer))
             {
                 Solved = true;
             }
@@ -104,13 +104,13 @@ namespace AdventCalendarWebApp.Pages._2020.Igloo.TaskBoard
             {
                 ModelState.AddModelError(string.Empty, $"Hm, that is a good answer, but I think there is even a better one.");
             }
-            //TODO Adopt the previous submitted selection to the next selection
+            SelectedPresents = answer;
             return Page();
         }
 
         public IActionResult OnPost()
         {
-            return RedirectToPage("Note03", new { selectedPresents = SelectedPresents });
+            return RedirectToPage("Note03", new { answer = SelectedPresents });
         }
     }
 }
