@@ -17,3 +17,9 @@ a g:hover > path {
 a g:active > path {
     stroke: #616161;
 }
+
+a g > path.convex-hull,
+    a g > path.convex-hull:hover,
+    a g > path.convex-hull:active {
+    stroke: transparent;
+}
