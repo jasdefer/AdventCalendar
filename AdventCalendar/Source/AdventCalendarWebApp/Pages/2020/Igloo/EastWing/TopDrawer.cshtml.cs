@@ -42,7 +42,7 @@ namespace AdventCalendarWebApp.Pages._2020.Igloo.EastWing
                 SecondDigit == 9 &&
                 ThirdDigit == 9)
             {
-                return RedirectToPage("Index", new { displayHolidayLights = true });
+                return RedirectToPage("Index", new { solvedTheRiddle = true });
             }
             ModelState.AddModelError(string.Empty, "Code invalid");
             return Page();
