@@ -9,8 +9,14 @@
     <title>@ViewData["Title"] - AdventCalendar</title>
     <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
-<body>
-    <div class="container">
+<body class="bg-light">
+    <environment include="Development">
+        <div class="alert alert-info text-center">
+            <strong>Test-Build:</strong>
+            This is the development environment.
+        </div>
+    </environment>
+    <div class="container bg-white">
         <h1 class="text-center">@ViewData["Title"]</h1>
         <hr />
         @RenderBody()
