@@ -4,23 +4,12 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AdventCalendarWebApp.Pages._2020.Igloo.TaskBoard
 {
-    public class Note05Model : PageModel
+    public class Note06Model : PageModel
     {
         private readonly DayValidation dayValidation;
-        private const int door = 5;
-        private static readonly string[] listedWords = new string[] 
-        {
-            "backup",
-            "banal",
-            "bar",
-            "bus",
-            "cars",
-            "dense",
-            "game",
-            "tinker"
-        };
+        private const int door = 6;
 
-        public Note05Model(DayValidation dayValidation)
+        public Note06Model(DayValidation dayValidation)
         {
             this.dayValidation = dayValidation;
         }
@@ -40,24 +29,20 @@ namespace AdventCalendarWebApp.Pages._2020.Igloo.TaskBoard
             {
                 return Page();
             }
-            if (CompareHelper.AreEqual("bank", answer))
+            if (CompareHelper.AreEqual("inception", answer))
             {
                 Solved = true;
             }
-            else if(CompareHelper.Contains(listedWords, answer))
-            {
-                ModelState.AddModelError(string.Empty, $"Just copying a single word from the list wont solve this riddle.");
-            }
             else
             {
-                ModelState.AddModelError(string.Empty, $"No, {answer} cannot be the solution.");
+                ModelState.AddModelError(string.Empty, $"The path connection {answer} does not match the available instructions.");
             }
             return Page();
         }
 
         public IActionResult OnPost()
         {
-            return RedirectToPage("Note05", new { answer = Answer });
+            return RedirectToPage("Note06", new { answer = Answer });
         }
     }
 }
