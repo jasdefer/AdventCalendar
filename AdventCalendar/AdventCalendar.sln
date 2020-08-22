@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29926.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{667C0442-0E99-4E99-87C1-FA552E87F1CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventCalendarWebApp", "Source\AdventCalendarWebApp\AdventCalendarWebApp.csproj", "{E02177C2-104F-4F60-A4E7-424CB67E3BE2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdventCalendarWebApp", "Source\AdventCalendarWebApp\AdventCalendarWebApp.csproj", "{E02177C2-104F-4F60-A4E7-424CB67E3BE2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
