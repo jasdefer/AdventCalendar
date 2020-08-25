@@ -27,7 +27,7 @@ namespace AdventCalendarWebApp.Pages._2020.Igloo.EastWing
             SecondDigit = secondDigit;
             ThirdDigit = thirdDigit;
 
-            if(!FirstDigit.HasValue &&
+            if (!FirstDigit.HasValue &&
                 !SecondDigit.HasValue &&
                 !ThirdDigit.HasValue)
             {
@@ -38,7 +38,7 @@ namespace AdventCalendarWebApp.Pages._2020.Igloo.EastWing
                 ModelState.AddModelError(string.Empty, "Some magic inside the lock prevents it to be opened before the correct time has come.");
                 return Page();
             }
-            if(FirstDigit == 1 &&
+            if (FirstDigit == 1 &&
                 SecondDigit == 9 &&
                 ThirdDigit == 9)
             {

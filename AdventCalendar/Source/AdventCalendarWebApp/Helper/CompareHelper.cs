@@ -12,13 +12,13 @@ namespace AdventCalendarWebApp.Helper
 
         public static bool Contains(IEnumerable<string> collection, string input)
         {
-            if(collection == null)
+            if (collection == null)
             {
                 return false;
             }
             foreach (var item in collection)
             {
-                if(AreEqual(item, input))
+                if (AreEqual(item, input))
                 {
                     return true;
                 }

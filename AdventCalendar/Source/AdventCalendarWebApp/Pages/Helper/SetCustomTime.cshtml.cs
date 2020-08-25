@@ -14,11 +14,11 @@ namespace AdventCalendarWebApp.Pages.Helper
         public ITimeProvider TimeProvider { get; set; }
         public void OnGet(int? index = null)
         {
-            if(!index.HasValue)
+            if (!index.HasValue)
             {
                 return;
             }
-            if(index<0 || index > 24)
+            if (index < 0 || index > 24)
             {
                 index = 0;
             }

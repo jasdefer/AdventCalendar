@@ -8,7 +8,7 @@ namespace AdventCalendarWebApp.Pages._2020.Igloo.TaskBoard
     {
         private readonly DayValidation dayValidation;
         private const int door = 5;
-        private static readonly string[] listedWords = new string[] 
+        private static readonly string[] listedWords = new string[]
         {
             "backup",
             "banal",
@@ -44,7 +44,7 @@ namespace AdventCalendarWebApp.Pages._2020.Igloo.TaskBoard
             {
                 Solved = true;
             }
-            else if(CompareHelper.Contains(listedWords, answer))
+            else if (CompareHelper.Contains(listedWords, answer))
             {
                 ModelState.AddModelError(string.Empty, $"Just copying a single word from the list wont solve this riddle.");
             }

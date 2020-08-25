@@ -92,11 +92,11 @@ namespace AdventCalendarWebApp.Pages._2020.Igloo.TaskBoard
             {
                 return BadRequest();
             }
-            if(answer.Distinct().Count() != Presents.Length)
+            if (answer.Distinct().Count() != Presents.Length)
             {
                 ModelState.AddModelError(string.Empty, "Each present must be in exactly one toy bag. It is not possible to store a single present in two toy bags.");
             }
-            else if(IsCorrectSolution(answer))
+            else if (IsCorrectSolution(answer))
             {
                 Solved = true;
             }

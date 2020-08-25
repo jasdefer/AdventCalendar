@@ -12,7 +12,7 @@ namespace AdventCalendarWebApp.Pages
 
         public void OnGet()
         {
-           
+
         }
     }
 }
