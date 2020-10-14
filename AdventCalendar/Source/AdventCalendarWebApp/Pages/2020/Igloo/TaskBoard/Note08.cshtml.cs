@@ -1,8 +1,6 @@
 using AdventCalendarWebApp.Helper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Collections.Generic;
-using System.Data.SqlTypes;
 using System.Linq;
 
 namespace AdventCalendarWebApp.Pages._2020.Igloo.TaskBoard
@@ -13,7 +11,7 @@ namespace AdventCalendarWebApp.Pages._2020.Igloo.TaskBoard
         private const int door = 8;
 
         //Column and row labels: S,A,B,C,D,E,F,G,H
-        private int[,] distanceMatrix = new int[9, 9]
+        private readonly int[,] distanceMatrix = new int[9, 9]
         {
             { 0,5 ,5 ,3,10,9,3,6,7},
             { 5,0 ,10,4,7 ,6,2,5,8},
@@ -46,7 +44,7 @@ namespace AdventCalendarWebApp.Pages._2020.Igloo.TaskBoard
             {
                 return Page();
             }
-            if (answer.Length!=10 ||
+            if (answer.Length != 10 ||
                 char.ToLowerInvariant(answer[0]) != 's' ||
                 char.ToLowerInvariant(answer[^1]) != 's')
             {
@@ -63,11 +61,11 @@ namespace AdventCalendarWebApp.Pages._2020.Igloo.TaskBoard
                 //A  = 65, B = 66 etc.
                 //A has the index 1 in the distanceMatrix array, B has the index 2, etc.
                 var index = char.ToUpperInvariant(answer[i]) - 64;
-                if(index < 1 ||
+                if (index < 1 ||
                     index > 8)
                 {
                     //Only A to H which are the indices 1 to 8 are valid inputs
-                    if(index == 19)
+                    if (index == 19)
                     {
                         //Add an extra error message if the input contains a S inside the answer
                         ModelState.AddModelError(string.Empty, $"Santa should visit S only at the start and end of his journey. Not in between household visits.");

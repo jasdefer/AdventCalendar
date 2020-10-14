@@ -11,7 +11,7 @@ namespace AdventCalendarWebApp.Pages._2020.Igloo.TaskBoard
         private static readonly string[] listedWords = new string[]
         {
             "backup",
-            "banal",
+            "weaken",
             "bar",
             "bus",
             "cars",
