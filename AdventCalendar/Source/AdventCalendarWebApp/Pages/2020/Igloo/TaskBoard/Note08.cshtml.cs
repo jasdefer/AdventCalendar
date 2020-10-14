@@ -89,7 +89,7 @@ namespace AdventCalendarWebApp.Pages._2020.Igloo.TaskBoard
 
             if (distance > 30)
             {
-                ModelState.AddModelError(string.Empty, $"If I counted correctly, your answer has a total legnth of {distance} steps. I think there is a shorter connection.");
+                ModelState.AddModelError(string.Empty, $"If I counted correctly, your answer has a total length of {distance} steps. I think there is a shorter connection.");
             }
             else
             {
