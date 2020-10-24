@@ -55,7 +55,7 @@ namespace AdventCalendarWebApp.Pages._2020.Igloo.TaskBoard
             Solved = isCorrectAnswer;
             if (!isCorrectAnswer)
             {
-                ModelState.AddModelError(string.Empty, $"Your answer ({string.Join(", ",answer)}) is false.");
+                ModelState.AddModelError(string.Empty, $"Your answer ({string.Join(", ", answer)}) is false.");
             }
             SelectedToys = answer;
 

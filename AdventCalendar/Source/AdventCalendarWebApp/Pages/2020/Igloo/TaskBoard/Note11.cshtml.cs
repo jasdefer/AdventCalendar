@@ -4,20 +4,19 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AdventCalendarWebApp.Pages._2020.Igloo.TaskBoard
 {
-    public class Note10Model : PageModel
+    public class Note11Model : PageModel
     {
         private readonly DayValidation dayValidation;
-        private const int door = 10;
+        private const int door = 11;
         private static readonly string[] shapeNames = new string[]
         {
+            "rhombus",
+            "hexagon",
             "pentagon",
-            "rectangle",
-            "square",
-            "triangle",
-            "hexagon"
+            "rectangle"
         };
 
-        public Note10Model(DayValidation dayValidation)
+        public Note11Model(DayValidation dayValidation)
         {
             this.dayValidation = dayValidation;
         }
@@ -37,7 +36,7 @@ namespace AdventCalendarWebApp.Pages._2020.Igloo.TaskBoard
             {
                 return Page();
             }
-            if (CompareHelper.AreEqual("train", answer))
+            if (CompareHelper.AreEqual("moat", answer))
             {
                 Solved = true;
             }
@@ -54,7 +53,7 @@ namespace AdventCalendarWebApp.Pages._2020.Igloo.TaskBoard
 
         public IActionResult OnPost()
         {
-            return RedirectToPage("Note10", new { answer = Answer });
+            return RedirectToPage("Note11", new { answer = Answer });
         }
     }
 }
