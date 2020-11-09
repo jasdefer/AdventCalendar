@@ -22,4 +22,5 @@ a g > path.convex-hull,
     a g > path.convex-hull:hover,
     a g > path.convex-hull:active {
     stroke: transparent;
+    fill:transparent;
 }
