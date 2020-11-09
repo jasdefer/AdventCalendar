@@ -1,0 +1,28 @@
+﻿@page
+@model AdventCalendarWebApp.Pages.Misc.InfoModel
+@{
+    ViewData["Title"] = "Info";
+    var regex = new System.Text.RegularExpressions.Regex(@"^(\d+\.)?(\d+\.)?(\*|\d+)$");
+}
+<h3>Current Version</h3>
+<p class="text-justify">
+    @Model.Version
+</p>
+<h3>Description</h3>
+<p class="text-justify">
+    @Model.PageDescription
+</p>
+<h3>GitHub</h3>
+<p class="text-justify">
+    This website is open source on <a href="https://github.com/jasdefer/AdventCalendar" target="_blank">GitHub</a>.
+    Feel free to create an issue or pull request to improve this advent calendar.
+</p>
+<h3>Release notes</h3>
+<ul class="list-group">
+    @foreach (var item in Model.ReleaseNotes)
+    {
+
+        var isTitle = regex.Match(item.Trim()).Success;
+        <li class="list-group-item@(isTitle?" list-group-item-dark":string.Empty)">@item</li>
+	}
+</ul>
