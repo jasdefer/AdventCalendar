@@ -1,0 +1,26 @@
+﻿path {
+    stroke: black;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 4px;
+}
+
+a g > path {
+    fill: transparent;
+}
+
+a g:hover > path {
+    stroke: #424242;
+}
+
+a g:active > path {
+    stroke: #616161;
+}
+
+a g > path.convex-hull,
+    a g > path.convex-hull:hover,
+    a g > path.convex-hull:active {
+    stroke: transparent;
+    fill:transparent;
+}
