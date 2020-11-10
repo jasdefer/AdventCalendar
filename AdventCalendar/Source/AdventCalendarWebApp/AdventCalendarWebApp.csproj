@@ -10,8 +10,10 @@
     <PackageId>AdventCalendarWebApp</PackageId>
     <Company />
     <Product>Advent Calendar</Product>
-    <Version>0.0.2</Version>
-    <PackageReleaseNotes>0.0.2
+    <Version>0.0.3</Version>
+    <PackageReleaseNotes>0.0.3
+Added all riddles until the 16th day
+0.0.2
 Added the first 3 riddles and the core project infrastructure
 0.0.1
 Initial release</PackageReleaseNotes>
