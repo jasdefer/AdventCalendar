@@ -10,8 +10,11 @@
     <PackageId>AdventCalendarWebApp</PackageId>
     <Company />
     <Product>Advent Calendar</Product>
-    <Version>0.0.3</Version>
-    <PackageReleaseNotes>0.0.3
+    <Version>0.3.1</Version>
+    <PackageReleaseNotes>0.3.1
+Fixed time provider bug
+Added customized error pages
+0.0.3
 Added all riddles until the 16th day
 0.0.2
 Added the first 3 riddles and the core project infrastructure

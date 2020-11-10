@@ -12,9 +12,12 @@ namespace AdventCalendarWebApp
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private readonly IWebHostEnvironment appEnv;
+
+        public Startup(IConfiguration configuration, IWebHostEnvironment appEnv)
         {
             Configuration = configuration;
+            this.appEnv = appEnv;
         }
 
         public IConfiguration Configuration { get; }
@@ -24,8 +27,14 @@ namespace AdventCalendarWebApp
         {
             services.AddRazorPages()
                 .AddRazorRuntimeCompilation();
-
-            services.AddTransient<ITimeProvider, DebugTimeProvider>();
+            if (appEnv.IsDevelopment())
+            {
+                services.AddTransient<ITimeProvider, DebugTimeProvider>();
+            }
+            else
+            {
+                services.AddTransient<ITimeProvider, UtcTimeProvider>();
+            }
             services.AddTransient<DayValidation>();
             services.AddDistributedMemoryCache();
 
@@ -46,10 +55,10 @@ namespace AdventCalendarWebApp
             }
             else
             {
-                app.UseExceptionHandler("/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            app.UseStatusCodePagesWithReExecute("/Error/{0}");
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
