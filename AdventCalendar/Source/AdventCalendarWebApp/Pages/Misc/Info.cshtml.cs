@@ -18,7 +18,7 @@ namespace AdventCalendarWebApp.Pages.Misc
             var assembly = typeof(Startup).Assembly;
             Version = assembly.GetName().Version.ToString();
             PageDescription = assembly.GetCustomAttribute<AssemblyDescriptionAttribute>().Description;
-            
+
             //Read the release notes
             //I did not find any way to read the release notes as I did for the above version and description
             //So I just read the *.csproj file
