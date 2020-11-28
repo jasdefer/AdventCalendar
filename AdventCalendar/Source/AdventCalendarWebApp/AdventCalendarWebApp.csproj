@@ -10,8 +10,12 @@
     <PackageId>AdventCalendarWebApp</PackageId>
     <Company />
     <Product>Advent Calendar</Product>
-    <Version>0.3.1</Version>
-    <PackageReleaseNotes>0.3.1
+    <Version>0.4.0</Version>
+    <PackageReleaseNotes>0.4.0
+Added notes 17 to 19
+Migrated to net5
+Fixed the favicon
+0.3.1
 Fixed time provider bug
 Added customized error pages
 0.0.3
