@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <UserSecretsId>d668cb45-49d8-4092-8c91-a569939bd3df</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>..\..</DockerfileContext>
@@ -10,8 +10,12 @@
     <PackageId>AdventCalendarWebApp</PackageId>
     <Company />
     <Product>Advent Calendar</Product>
-    <Version>0.3.1</Version>
-    <PackageReleaseNotes>0.3.1
+    <Version>0.4.0</Version>
+    <PackageReleaseNotes>0.4.0
+Added notes 17 to 19
+Migrated to net5
+Fixed the favicon
+0.3.1
 Fixed time provider bug
 Added customized error pages
 0.0.3
@@ -30,9 +34,9 @@ Initial release</PackageReleaseNotes>
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.9" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.8" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>
