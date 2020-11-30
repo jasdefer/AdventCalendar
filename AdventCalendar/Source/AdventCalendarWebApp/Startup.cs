@@ -61,17 +61,7 @@ namespace AdventCalendarWebApp
             }
             app.UseStatusCodePagesWithReExecute("/Error/{0}");
             app.UseHttpsRedirection();
-
-            //Needed for the .webmanifest file used by the favicon to be found
-            var provider = new FileExtensionContentTypeProvider();
-            provider.Mappings[".webmanifest"] = "application/manifest+json";
-            app.UseStaticFiles(new StaticFileOptions()
-            {
-                ContentTypeProvider = provider
-            });
-
             app.UseStaticFiles();
-
             app.UseRouting();
             app.UseSession();
             app.UseMiddleware<StatisticLogger>();
