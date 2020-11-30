@@ -10,8 +10,11 @@
     <PackageId>AdventCalendarWebApp</PackageId>
     <Company />
     <Product>Advent Calendar</Product>
-    <Version>0.4.0</Version>
-    <PackageReleaseNotes>0.4.0
+    <Version>0.4.1</Version>
+    <PackageReleaseNotes>0.4.1
+Added a new favicon
+Fixed broken favicon and manifest links
+0.4.0
 Added notes 17 to 19
 Migrated to net5
 Fixed the favicon
