@@ -3,6 +3,7 @@ using AdventCalendarWebApp.Helper.Middleware;
 using AdventCalendarWebApp.Helper.TimeProvider;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -59,12 +60,9 @@ namespace AdventCalendarWebApp
                 app.UseHsts();
             }
             app.UseStatusCodePagesWithReExecute("/Error/{0}");
-
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
-
             app.UseSession();
             app.UseMiddleware<StatisticLogger>();
             app.UseEndpoints(endpoints =>
