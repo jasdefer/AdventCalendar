@@ -10,8 +10,10 @@
     <PackageId>AdventCalendarWebApp</PackageId>
     <Company />
     <Product>Advent Calendar</Product>
-    <Version>0.4.1</Version>
-    <PackageReleaseNotes>0.4.1
+    <Version>0.4.2</Version>
+    <PackageReleaseNotes>0.4.2
+Fixed the day 04 riddle
+0.4.1
 Added a new favicon
 Fixed broken favicon and manifest links
 0.4.0
