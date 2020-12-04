@@ -54,15 +54,17 @@ namespace AdventCalendarWebApp.Pages._2020.Stable
             {
                 IsSolved = true;
             }
-
-            var isMisleadAnswer = IsMisleadAnswer(answer);
-            if (isMisleadAnswer)
-            {
-                ModelState.AddModelError(string.Empty, "Strange, the food-reindeer-assignment exactly follows the instruction on the note. But the reindeer do not eat their food. Someone mixed up the order of the troughs.");
-            }
             else
             {
-                ModelState.AddModelError(string.Empty, "The reindeers don't eat their food. This seems to be the wrong assignment.");
+                var isMisleadAnswer = IsMisleadAnswer(answer);
+                if (isMisleadAnswer)
+                {
+                    ModelState.AddModelError(string.Empty, "Strange, the food-reindeer-assignment exactly follows the instruction on the note. But the reindeer do not eat their food. Someone mixed up the order of the troughs.");
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "The reindeers don't eat their food. This seems to be the wrong assignment.");
+                }
             }
             SelectedMeals = answer;
             return Page();
