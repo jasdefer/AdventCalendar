@@ -28,12 +28,12 @@ namespace AdventCalendarWebApp.Pages._2020.Otis
             {
                 ModelState.AddModelError(string.Empty, $"Yeah, it could be a book. But which one, what is the missing book called?");
             }
-            else if (CompareHelper.AreEqual(answer,"gilli")||
-                CompareHelper.AreEqual(answer,"seran"))
+            else if (CompareHelper.AreEqual(answer, "gilli") ||
+                CompareHelper.AreEqual(answer, "seran"))
             {
                 ModelState.AddModelError(string.Empty, $"No, the book {answer} is on the floor.");
             }
-            else if(CompareHelper.AreEqual(answer, "sulien"))
+            else if (CompareHelper.AreEqual(answer, "sulien"))
             {
                 ModelState.AddModelError(string.Empty, "I think Odin never owned the fifth book sulien.");
             }
