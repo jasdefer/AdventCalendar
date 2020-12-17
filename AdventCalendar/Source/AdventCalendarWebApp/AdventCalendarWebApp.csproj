@@ -10,8 +10,10 @@
     <PackageId>AdventCalendarWebApp</PackageId>
     <Company />
     <Product>Advent Calendar</Product>
-    <Version>0.4.3</Version>
-    <PackageReleaseNotes>0.4.3
+    <Version>0.4.4</Version>
+    <PackageReleaseNotes>0.4.4
+Fixed day 17 riddle again
+0.4.3
 Fixed day 17 riddle
 Added riddle 20 and 21
 0.4.2
