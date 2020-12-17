@@ -10,8 +10,8 @@ namespace AdventCalendarWebApp.Pages._2020.Hideout
     {
         private readonly DayValidation dayValidation;
         private const int door = 17;
-        private static readonly int[] CorrectPath = new int[] { 0, 1, -1, 0, -1, 0, 0, 0 };
-        public int[] Path { get; set; } = new int[0];
+        private static readonly int[] CorrectPath = new int[] { 0, 1, -1, -1, 0, 0, 0, 1 };
+        public int[] Path { get; set; } = System.Array.Empty<int>();
         public bool? Solved { get; private set; } = null;
 
         public MazeModel(DayValidation dayValidation)
