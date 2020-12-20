@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AdventCalendarWebApp.Pages._2020
 {
-    public class SnowmanForestModel : PageModel
+    public class SnowmenForestModel : PageModel
     {
         private static readonly int[] sequence = new int[10] { 5, 2, 0, 9, 4, 8, 7, 6, 1, 3 };
         private readonly DayValidation dayValidation;
@@ -14,7 +14,7 @@ namespace AdventCalendarWebApp.Pages._2020
         public bool Solved { get; set; }
         public int CurrentElfPosition { get; set; }
 
-        public SnowmanForestModel(DayValidation dayValidation)
+        public SnowmenForestModel(DayValidation dayValidation)
         {
             this.dayValidation = dayValidation;
         }
@@ -22,6 +22,10 @@ namespace AdventCalendarWebApp.Pages._2020
         public IActionResult OnGet(int tree, int guess)
         {
             CanSolve = dayValidation.HasAccess(door);
+            if (!CanSolve)
+            {
+                return Page();
+            }
             guess++;
             if (guess >= sequence.Length)
             {
