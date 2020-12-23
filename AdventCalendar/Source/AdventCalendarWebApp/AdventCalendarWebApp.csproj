@@ -10,8 +10,10 @@
     <PackageId>AdventCalendarWebApp</PackageId>
     <Company />
     <Product>Advent Calendar</Product>
-    <Version>0.4.6</Version>
-    <PackageReleaseNotes>0.4.6
+    <Version>0.4.7</Version>
+    <PackageReleaseNotes>0.4.7
+Added note 24
+0.4.6
 Fixed the link to note 22
 0.4.5
 Added riddle 22 and 23
