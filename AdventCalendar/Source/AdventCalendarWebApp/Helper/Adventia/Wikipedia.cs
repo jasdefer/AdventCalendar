@@ -12,13 +12,17 @@ namespace AdventCalendarWebApp.Helper.Adventia
 {
     public static class Wikipedia
     {
+        public record SingleArticleRoot(string batchcomplete, SingleArticleQuery query);
+        public record SingleArticleQuery(Dictionary<string, SingleArticlePage> pages);
+        public record SingleArticlePage(int pageid, string title, string extract);
+
         public static async Task<string> GetTextAsync(string keyword)
         {
             var query = $"https://de.wikipedia.org/w/api.php?action=query&format=json&exintro&titles={keyword}&prop=extracts&explaintext";
             using var client = new HttpClient();
             var response = await client.GetAsync(query);
             var json = await response.Content.ReadAsStringAsync();
-            var content = JsonSerializer.Deserialize<Root>(json);
+            var content = JsonSerializer.Deserialize<SingleArticleRoot>(json);
             return content.query.pages.Single().Value.extract;
         }
 
@@ -51,22 +55,20 @@ namespace AdventCalendarWebApp.Helper.Adventia
             "blumenstrauß"
         };
 
-        public static async Task<string> GetRandomTitle()
-        {
-            var query = "https://de.wikipedia.org/w/api.php?action=query&format=json&generator=random&prop=extracts&explaintext";
-            using var client = new HttpClient();
-            Page page;
-            do
-            {
-                var response = await client.GetAsync(query);
-                var json = await response.Content.ReadAsStringAsync();
-                var content = JsonSerializer.Deserialize<Root>(json);
-                page = content.query.pages.Single().Value;
-            }
-            while (page.extract.Length < 50);
-            return page.title;
-        }
+        public record RandomArticleRoot(string batchcomplete, RandomArticleQuery query);
+        public record RandomArticleQuery(IReadOnlyCollection<RandomArticlePage> random);
+        public record RandomArticlePage(int id, string title, int ns);
 
+        public static async Task<IReadOnlyList<string>> GetRandomTitle(int number)
+        {
+            var query = $"https://de.wikipedia.org/w/api.php?action=query&format=json&list=random&rnlimit={number}&rnnamespace=0";
+            using var client = new HttpClient();
+            var response = await client.GetAsync(query);
+            var json = await response.Content.ReadAsStringAsync();
+            var content = JsonSerializer.Deserialize<RandomArticleRoot>(json);
+            var titles = content.query.random.Select(x => x.title).ToArray();
+            return titles;
+        }
 
         public static string GetRandomKeyword(int seed)
         {
@@ -76,7 +78,5 @@ namespace AdventCalendarWebApp.Helper.Adventia
         }
     }
 
-    public record Root(string batchcomplete, Query query);
-    public record Query(Dictionary<string, Page> pages);
-    public record Page(int pageid, string title, string extract);
+    
 }

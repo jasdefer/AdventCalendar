@@ -1,0 +1,48 @@
+﻿@page
+@model AdventCalendarWebApp.Pages._2021.PickArticleModel
+<h1>Titles</h1>
+<ul>
+    @for (int i = 0; i < Model.Titles.Count; i++)
+    {
+        <li>@Model.Titles[i]</li>
+    }
+</ul>
+<h2>Worte</h2>
+<ul>
+    @for (int i = 0; i < Model.Words.Count; i++)
+    {
+        <li>@Model.Words[i]</li>
+    }
+</ul>
+<p>
+    Zu welchem Titel gehören die @(Model.Words.Count) Worte?
+</p>
+@if ("Correct" == Model.Message)
+{
+                <p>Correct!</p>
+                <a class="btn btn-secondary btn-outline" asp-page="PickArticle">Nochmal spielen</a>
+}
+else
+{
+    if(Model.Message == "Incorrect")
+                {
+                    <p>Incorrect!</p>
+                }
+<form method="post">
+    <div class="input-group">
+        <input asp-for="Answer" class="form-control" type="number" maxlength="16" />
+        @for (int i = 0; i < Model.Words.Count; i++)
+        {
+            <input type="hidden" asp-for="Words[i]" />
+        }
+        @for (int i = 0; i < Model.Titles.Count; i++)
+        {
+            <input type="hidden" asp-for="Titles[i]" />
+        }
+        <input type="hidden" asp-for="CorrectIndex" />
+        <div class="input-group-append">
+            <input class="btn btn-dark" type="submit" value="Solve" />
+        </div>
+    </div>
+</form>
+}
