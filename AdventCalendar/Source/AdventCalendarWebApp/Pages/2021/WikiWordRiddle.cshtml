@@ -1,30 +1,36 @@
 ﻿@page
 @model AdventCalendarWebApp.Pages._2021.WikiWordRiddleModel
-
-<ul>
-    @foreach (var word in Model.Words)
-    {
-        <li>@word</li>
-    }
-</ul>
+<a asp-page="Index" class="btn btn-secondary">Zurück</a>
 @if (string.IsNullOrEmpty(Model.Message) ||
-  Model.Message == "Incorrect")
-
+Model.Message == "Incorrect")
 {
-<form method="post">
-    <div class="input-group">
-        <input asp-for="Guess" class="form-control" type="text" maxlength="16" />
-        <input type="hidden" asp-for="Keyword" />
-        <input type="hidden" asp-for="Number" />
-        <div class="input-group-append">
-            <input class="btn btn-dark" type="submit" value="Solve" />
-        </div>
-    </div>
 
-</form>
+
+    if (!string.IsNullOrEmpty(Model.Message))
+    {
+        <p>@Model.Message</p>
+    }
+    <form method="post">
+        <div class="input-group">
+            <input asp-for="Guess" class="form-control" type="text" maxlength="16" />
+            <input type="hidden" asp-for="Seed" />
+            <input type="hidden" asp-for="Number" />
+            <div class="input-group-append">
+                <input class="btn btn-dark" type="submit" value="Solve" />
+            </div>
+        </div>
+
+    </form>
 }
 else
 {
     <p>@Model.Message</p>
 }
-<p>Test @Model.Message</p>
+<p>Try to guess the Wikipedia article from these randomly selected words:</p>
+<ul>
+    @for (int i = Model.Words.Length - 1; i >= 0; i--)
+    {
+        <li>@Model.Words[i]</li>
+    }
+</ul>
+
