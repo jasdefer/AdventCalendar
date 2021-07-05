@@ -33,4 +33,10 @@ else
         <li>@Model.Words[i]</li>
     }
 </ul>
-
+<p>Categories:</p>
+<ul>
+    @foreach (var category in Model.Categories)
+    {
+        <li>@category</li>
+    }
+</ul>

@@ -2,14 +2,17 @@ using AdventCalendarWebApp.Helper.Adventia;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
+using static AdventCalendarWebApp.Helper.Adventia.Wikipedia;
 
 namespace AdventCalendarWebApp.Pages._2021
 {
     public class WikiWordRiddleModel : PageModel
     {
         public string[] Words { get; set; }
-        
+        public string[] Categories { get; set; }
+
         [BindProperty]
         public string Guess { get; set; }
 
@@ -25,18 +28,24 @@ namespace AdventCalendarWebApp.Pages._2021
             Number = number;
             Message = message;
             Seed = seed;
-            string text;
+            SingleArticlePage page;
             var keyword = Wikipedia.GetRandomKeyword(Seed);
             try
             {
-                text = await Wikipedia.GetTextAsync(keyword);
+                page = await Wikipedia.GetTextAsync(keyword);
+                Categories = page.categories
+                    .Select(x => x.title
+                        .Replace("Kategorie:", "")
+                        .ToLowerInvariant())
+                    .Where(x => x!=keyword)
+                    .ToArray();
             }
             catch (Exception)
             {
                 Message = "Invalid keyword";
                 return;
             }
-            Words = WordSelection.GetWords(text, Number, new Random(1), WordSelection.GermanBlacklist, keyword);
+            Words = WordSelection.GetWords(page.extract, Number, new Random(1), WordSelection.GermanBlacklist, keyword);
         }
 
         public IActionResult OnPost()

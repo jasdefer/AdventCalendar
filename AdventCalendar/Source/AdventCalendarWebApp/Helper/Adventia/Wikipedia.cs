@@ -14,16 +14,17 @@ namespace AdventCalendarWebApp.Helper.Adventia
     {
         public record SingleArticleRoot(string batchcomplete, SingleArticleQuery query);
         public record SingleArticleQuery(Dictionary<string, SingleArticlePage> pages);
-        public record SingleArticlePage(int pageid, string title, string extract);
+        public record SingleArticlePage(int pageid, string title, string extract, IReadOnlyCollection<SingleArticleCategory> categories);
+        public record SingleArticleCategory(int ns, string title);
 
-        public static async Task<string> GetTextAsync(string keyword)
+        public static async Task<SingleArticlePage> GetTextAsync(string keyword)
         {
-            var query = $"https://de.wikipedia.org/w/api.php?action=query&format=json&exintro&titles={keyword}&prop=extracts&explaintext";
+            var query = $"https://de.wikipedia.org/w/api.php?action=query&format=json&exintro&titles={keyword}&prop=extracts|categories&explaintext";
             using var client = new HttpClient();
             var response = await client.GetAsync(query);
             var json = await response.Content.ReadAsStringAsync();
             var content = JsonSerializer.Deserialize<SingleArticleRoot>(json);
-            return content.query.pages.Single().Value.extract;
+            return content.query.pages.Single().Value;
         }
 
         private static readonly IReadOnlyList<string> keywords = new string[]
@@ -77,6 +78,4 @@ namespace AdventCalendarWebApp.Helper.Adventia
             return keyword;
         }
     }
-
-    
 }

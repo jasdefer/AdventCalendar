@@ -14,8 +14,8 @@ namespace AdventcalendarTest.Helper.Adventia
         [TestMethod]
         public async Task MyTestMethod()
         {
-            var text = await Wikipedia.GetTextAsync("Basketball");
-            var words = WordSelection.GetWords(text, 50, new Random(1), WordSelection.GermanBlacklist, "basketball");
+            var page = await Wikipedia.GetTextAsync("Basketball");
+            var words = WordSelection.GetWords(page.extract, 50, new Random(1), WordSelection.GermanBlacklist, "basketball");
         }   
     }
 }

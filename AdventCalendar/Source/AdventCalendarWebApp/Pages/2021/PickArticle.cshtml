@@ -1,12 +1,12 @@
 ﻿@page
 @model AdventCalendarWebApp.Pages._2021.PickArticleModel
 <h1>Titles</h1>
-<ul>
+<ol start="0">
     @for (int i = 0; i < Model.Titles.Count; i++)
     {
         <li>@Model.Titles[i]</li>
     }
-</ul>
+</ol>
 <h2>Worte</h2>
 <ul>
     @for (int i = 0; i < Model.Words.Count; i++)

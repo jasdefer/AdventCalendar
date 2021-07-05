@@ -32,8 +32,8 @@ namespace AdventCalendarWebApp.Pages._2021
                 Titles = await Wikipedia.GetRandomTitle(NumberOfTitles);
                 var random = new Random();
                 CorrectIndex = random.Next(0, Titles.Count);
-                var text = await Wikipedia.GetTextAsync(Titles[CorrectIndex]);
-                Words = WordSelection.GetWords(text, NumberOfWords, random, WordSelection.GermanBlacklist, Titles[CorrectIndex]).ToList();
+                var page = await Wikipedia.GetTextAsync(Titles[CorrectIndex]);
+                Words = WordSelection.GetWords(page.extract, NumberOfWords, random, WordSelection.GermanBlacklist, Titles[CorrectIndex]).ToList();
             }
             else
             {
