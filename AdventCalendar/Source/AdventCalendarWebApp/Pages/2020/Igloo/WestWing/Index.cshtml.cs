@@ -27,7 +27,7 @@ namespace AdventCalendarWebApp.Pages._2020.Igloo.WestWing
 
         public IActionResult OnGet(bool hasMagnifier = false, string[] answer = null)
         {
-            CanSolve = dayValidation.HasAccess(14);
+            CanSolve = dayValidation.HasAccess2020(14);
             HasMagnifier = hasMagnifier & CanSolve;
             if (!CanSolve)
             {

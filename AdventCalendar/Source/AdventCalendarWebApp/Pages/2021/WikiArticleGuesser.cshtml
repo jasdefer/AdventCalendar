@@ -1,0 +1,47 @@
+﻿@page
+@using AdventCalendarWebApp.Model;
+@model AdventCalendarWebApp.Pages._2021.WikiArticleGuesserModel
+
+<h1 class="display-4">Door @Model.Day</h1>
+<p>Try to guess a Wikipedia article based on random words of its content.</p>
+@if (Model.ValidationState == ValidationState.Correct)
+{
+    <div class="alert alert-success">
+        Yes, that is correct.
+    </div>
+    <p>
+        The correct articles indeed is @(WikiArticleGuesserModel.articles[Model.Index]).
+        It took you @Model.NumberOfGuesses guesses with @Model.NumberOfHints hints.
+        You spend @Model.SolveDuration.ToString(@"hh\:mm\:ss") to solve this one. 
+    </p>
+}
+else
+{
+    if (Model.NumberOfGuesses > 0)
+    { 
+        <p>You have had @Model.NumberOfGuesses guesses so far.</p>
+    }
+    <form method="post">
+        <input type="hidden" asp-for="Day" />
+        <input type="hidden" asp-for="NumberOfHints" value="@Model.NumberOfHints" />
+        <input type="hidden" asp-for="NumberOfGuesses" value="@Model.NumberOfGuesses"/>
+        <input type="hidden" asp-for="StartOfGuessing" />
+        <div class="row">
+            <div class="col-lg-6 mt-2">
+                <input asp-for="Answer" type="text" class="form-control" />
+            </div>
+            <div class="col-lg-6 d-grid mt-2">
+                <input type="submit" class="btn btn-primary" />
+            </div>
+        </div>
+    </form>
+}
+<p class="mt-5">Which articles could these words be part of?</p>
+<div class="row">
+    @for (int i = 0; i < Model.NumberOfHints; i++)
+    {
+        <div class="col-6 col-lg-4 text-center p-1">
+            <h2>@WikiArticleGuesserModel.Words[Model.Index][i]</h2>
+        </div>
+    }
+</div>

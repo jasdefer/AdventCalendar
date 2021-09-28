@@ -21,7 +21,7 @@ namespace AdventCalendarWebApp.Pages._2020
 
         public IActionResult OnGet(int tree, int guess)
         {
-            CanSolve = dayValidation.HasAccess(door);
+            CanSolve = dayValidation.HasAccess2020(door);
             if (!CanSolve)
             {
                 return Page();

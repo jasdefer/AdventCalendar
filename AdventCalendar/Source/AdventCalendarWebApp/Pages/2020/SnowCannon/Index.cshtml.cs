@@ -36,7 +36,7 @@ namespace AdventCalendarWebApp.Pages._2020.SnowCannon
 
         public IndexModel(DayValidation dayValidation)
         {
-            CanSolve = dayValidation.HasAccess(door);
+            CanSolve = dayValidation.HasAccess2020(door);
         }
 
         public IActionResult OnGet(bool[] answer)

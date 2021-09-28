@@ -1,9 +1,0 @@
-﻿@page
-@model AdventCalendarWebApp.Pages._2021.IndexModel
-<h1>Guess title</h1>
-@for (int i = 0; i < 15; i++)
-{
-    <a asp-page="WikiWordRiddle" asp-route-seed="@i" asp-route-number="5" class="btn btn-secondary m-2">Seed @i.ToString("D2")</a>
-}
-<h1>Pick title</h1>
-<a class="btn btn-secondary btn-outline" asp-page="PickArticle">Go</a>

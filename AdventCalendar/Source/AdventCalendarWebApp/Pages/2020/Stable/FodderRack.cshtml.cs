@@ -23,7 +23,7 @@ namespace AdventCalendarWebApp.Pages._2020.Stable
         public FodderRackModel(DayValidation dayValidation)
         {
             this.dayValidation = dayValidation;
-            CanSolve = dayValidation.HasAccess(day);
+            CanSolve = dayValidation.HasAccess2020(day);
         }
 
         public bool CanSolve { get; }

@@ -1,6 +1,5 @@
 ﻿using AdventCalendarWebApp.Helper.Adventia;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 
 namespace AdventcalendarTest.Helper.Adventia
 {
