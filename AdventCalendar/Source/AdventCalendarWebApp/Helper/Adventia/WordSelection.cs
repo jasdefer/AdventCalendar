@@ -14,7 +14,7 @@ namespace AdventCalendarWebApp.Helper.Adventia
 
         public static readonly string[] EnglishBlacklist = new string[]
         {
-            "the","be","to","of","and","been","a","in","that","have","I","it","for","not","on","with","he","as","you","do","at","this","but","his","by","from","they","we","say","her","she","or","an","will","my","one","all","would","there","their","what","so","up","out","if","about","who","get","which","go","me","when","make","can","like","time","no","just","him","know","take","into","your","some","could","them","see","other","than","then","now","only","come","its","over","also","use","two","how","our","well","way","even","new","want","because","any","these","give","day","most","us"
+            "the","be","to","of","and","been","has","a","in","that","have","I","it","for","not","on","with","he","as","you","do","at","this","but","his","by","from","they","we","say","her","she","or","an","will","my","one","all","would","there","their","what","so","up","out","if","about","who","get","which","go","me","when","make","can","like","time","no","just","him","know","take","into","your","some","could","them","see","other","than","then","now","only","come","its","over","also","use","two","how","our","well","way","even","new","want","because","any","these","give","day","most","us"
         };
 
         public static string[] GetWords(string text, int count, string[] blacklist, string keyword, Random random = null)

@@ -4,6 +4,7 @@
 
 <h1 class="display-4">Door @Model.Day</h1>
 <p>Try to guess a Wikipedia article based on random words of its content.</p>
+<a asp-page="/Index" class="btn btn-outline-secondary mb-2">Go back</a>
 @if (Model.ValidationState == ValidationState.Correct)
 {
     <div class="alert alert-success">
