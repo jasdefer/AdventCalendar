@@ -13,12 +13,12 @@ namespace AdventCalendarWebApp.Pages._2021
         private readonly DayValidation dayValidation;
         public static readonly IReadOnlyList<IReadOnlyList<string>> OptionStrings = new string[12][]
         {
-            new string[5]{"Neil Armstrong","Tour de France","Savanna","Helium","Jazz"},
-            new string[]{"Korean War","second group","dangerous","broadcast","victory"},
-            new string[]{"","","","",""},
-            new string[]{"","","","",""},
-            new string[]{"","","","",""},
-            new string[]{"","","","",""},
+            new string[5]{"Tour de France", "Neil Armstrong", "Savanna","Helium","Jazz"},
+            new string[5]{"Alcohol","Microprocessor","Walmart","Papyrus","DNA"},
+            new string[]{ "Broccoli", "Kim Kardashian", "Area 51","Road","Mirror"},
+            new string[]{ "Michelangelo", "Vincent van Gogh","Claude Monet", "Leonardo da Vinci", "Rembrandt","Pablo Picasso"},
+            new string[]{"Zebra", "Kim Kardashian", "Airbus A400M Atlas", "Andes","Hexagon","Whaam!"},
+            new string[]{ "Same-sex marriage in Spain", "Bob Marley", "Chocolate", "Joe Jackson","Welding"},
             new string[]{"","","","",""},
             new string[]{"","","","",""},
             new string[]{"","","","",""},
@@ -29,17 +29,17 @@ namespace AdventCalendarWebApp.Pages._2021
 
         public static readonly int[] CorrectOptions = new int[12]
         {
-            1,1,1,1,1,1,1,1,1,1,1,1
+            1,5,0,1,1,1,1,1,1,1,1,1
         };
 
         public static IReadOnlyList<IReadOnlyList<string>> Words = new string[12][]
         {
-            new string[]{ "word1","word2","word3" }, 
-            new string[]{ },
-            new string[]{ },
-            new string[]{ },
-            new string[]{ },
-            new string[]{ },
+            new string[]{ "Korean War","second group","dangerous","broadcast","victory" }, 
+            new string[]{ "monomeric","sequence","specify","information","development","store","transcribed"},
+            new string[]{ "branching","stalk","glucosinolate","resembles","family","classified","green" },
+            new string[]{ "posthumously", "impressionist","decade","artworks","oil","landscapes","brushwork","depression","unsuccessful" },
+            new string[]{ "asses","family","flies","recognisable","protected","distinctive","extant","inhabit","mountain"},
+            new string[]{ "joints","laser","hazardous","automatic","molten","electrical","distinct","manual","parent"},
             new string[]{ },
             new string[]{ },
             new string[]{ },
