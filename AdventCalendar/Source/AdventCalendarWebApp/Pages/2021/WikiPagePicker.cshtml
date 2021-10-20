@@ -11,11 +11,11 @@
     <div class="alert alert-success">
         Yes, that is correct.
     </div>
-    <p>
+    <div class="alert alert-dark">
         The correct articles indeed is @(WikiPagePickerModel.OptionStrings[Model.Index][WikiPagePickerModel.CorrectOptions[Model.Index]]).
         It took you @Model.NumberOfGuesses guesses.
         You spend @Model.SolveDuration.ToString(@"hh\:mm\:ss") to solve this one.
-    </p>
+    </div>
 }
 else if(Model.ValidationState == ValidationState.Incorrect)
             {

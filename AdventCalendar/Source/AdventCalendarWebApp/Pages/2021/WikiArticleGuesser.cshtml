@@ -3,24 +3,32 @@
 @model AdventCalendarWebApp.Pages._2021.WikiArticleGuesserModel
 
 <h1 class="display-4">Door @Model.Day</h1>
-<p>Try to guess a Wikipedia article based on random words of its content.</p>
+<p>Try to guess a Wikipedia article based on random words of its content. With each wrong guess new hints appear.</p>
 <a asp-page="/Index" class="btn btn-outline-secondary mb-2">Go back</a>
 @if (Model.ValidationState == ValidationState.Correct)
 {
     <div class="alert alert-success">
         Yes, that is correct.
     </div>
-    <p>
-        The correct articles indeed is @(WikiArticleGuesserModel.articles[Model.Index]).
+    <div class="alert alert-dark">
+        The correct articles indeed is <i>@(WikiArticleGuesserModel.articles[Model.Index].Replace("_"," "))</i>.
         It took you @Model.NumberOfGuesses guesses with @Model.NumberOfHints hints.
         You spend @Model.SolveDuration.ToString(@"hh\:mm\:ss") to solve this one. 
-    </p>
+    </div>
 }
 else
 {
+    if(Model.ValidationState == ValidationState.Incorrect)
+    {
+        <div class="alert alert-danger">
+            No, your guess was incorrect.
+        </div>
+    }
     if (Model.NumberOfGuesses > 0)
     { 
-        <p>You have had @Model.NumberOfGuesses guesses so far.</p>
+        <div class="alert alert-dark">
+            You have had @Model.NumberOfGuesses guess@(Model.NumberOfGuesses>1?"es":"") so far.
+        </div>
     }
     <form method="post">
         <input type="hidden" asp-for="Day" />
@@ -42,7 +50,7 @@ else
     @for (int i = 0; i < Model.NumberOfHints; i++)
     {
         <div class="col-6 col-lg-4 text-center p-1">
-            <h2>@WikiArticleGuesserModel.Words[Model.Index][i]</h2>
+            <h2>@WikiArticleGuesserModel.Words[Model.Index][Model.NumberOfHints - i - 1]</h2>
         </div>
     }
 </div>

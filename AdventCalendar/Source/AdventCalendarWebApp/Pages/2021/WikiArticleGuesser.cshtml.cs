@@ -74,9 +74,9 @@ namespace AdventCalendarWebApp.Pages._2021
         {
             Day = day;
             var hasAccess = dayValidation.HasAccess2021(day);
-            if (!hasAccess)
+            if (day % 2 == 0 || !hasAccess)
             {
-                return RedirectToPage("Index", new { invalidDoor = day });
+                return NotFound();
             }
             NumberOfHints = Math.Max(DefaultNumberOfHints, Math.Min(numberOfHints, Words[Index].Count - 1));
             NumberOfGuesses = Math.Max(0, numberOfGuesses);
@@ -93,6 +93,7 @@ namespace AdventCalendarWebApp.Pages._2021
             {
                 ValidationState = ValidationState.Incorrect;
                 NumberOfHints += NumberOfHintsPerTry;
+                NumberOfHints = Math.Min(NumberOfHints, Words[Index].Count);
             }
             NumberOfGuesses++;
             Answer = answer;

@@ -13,39 +13,39 @@ namespace AdventCalendarWebApp.Pages._2021
         private readonly DayValidation dayValidation;
         public static readonly IReadOnlyList<IReadOnlyList<string>> OptionStrings = new string[12][]
         {
-            new string[5]{"Tour de France", "Neil Armstrong", "Savanna","Helium","Jazz"},
-            new string[5]{"Alcohol","Microprocessor","Walmart","Papyrus","DNA"},
-            new string[]{ "Broccoli", "Kim Kardashian", "Area 51","Road","Mirror"},
-            new string[]{ "Michelangelo", "Vincent van Gogh","Claude Monet", "Leonardo da Vinci", "Rembrandt","Pablo Picasso"},
-            new string[]{"Zebra", "Kim Kardashian", "Airbus A400M Atlas", "Andes","Hexagon","Whaam!"},
-            new string[]{ "Same-sex marriage in Spain", "Bob Marley", "Chocolate", "Joe Jackson","Welding"},
-            new string[]{"","","","",""},
-            new string[]{"","","","",""},
-            new string[]{"","","","",""},
-            new string[]{"","","","",""},
-            new string[]{"","","","",""},
-            new string[]{"","","","",""},
+            new string[]{ "Bill Gates","Warren Buffet","Mark Zuckerberg", "Batman", "Tintin" },
+            new string[]{ "Tour de France", "Neil Armstrong", "Savanna","Helium","Jazz" },
+            new string[]{ "Alcohol","Microprocessor","Walmart","Papyrus","DNA" },
+            new string[]{ "Broccoli", "Kim Kardashian", "Area 51","Road","Mirror" },
+            new string[]{ "Michelangelo", "Vincent van Gogh","Claude Monet", "Leonardo da Vinci", "Rembrandt","Pablo Picasso" },
+            new string[]{ "Zebra", "Kim Kardashian", "Airbus A400M Atlas", "Andes","Hexagon","Whaam!" },
+            new string[]{ "Same-sex marriage in Spain", "Bob Marley", "Chocolate", "Joe Jackson","Welding" },
+            new string[]{ "Mathematics", "Bullfighting", "FC Bayern Munich", "Jousting", "Freight transport" },
+            new string[]{ "Apple", "Liquefied natural gas", "Easel", "Cargo", "Headquarters" },
+            new string[]{ "Algebra", "Military", "Ethics", "Crime", "Employment" },
+            new string[]{ "Company", "Astrid Lindgren", "The Thriving Cult of Greed and Power", "Money", "Democracy" },
+            new string[]{ "Bank", "Depression (mood)", "Watergate scandal", "Journalism", "Computer security" },
         };
 
         public static readonly int[] CorrectOptions = new int[12]
         {
-            1,5,0,1,1,1,1,1,1,1,1,1
+            3,1,4,0,1,0,4,2,3,0,3,2
         };
 
         public static IReadOnlyList<IReadOnlyList<string>> Words = new string[12][]
         {
-            new string[]{ "Korean War","second group","dangerous","broadcast","victory" }, 
+            new string[]{ "Bob Kane", "philanthropist", "parents","sidekick","justice","publication"},
+            new string[]{ "Korean War","second group","dangerous","broadcast","victory" },
             new string[]{ "monomeric","sequence","specify","information","development","store","transcribed"},
             new string[]{ "branching","stalk","glucosinolate","resembles","family","classified","green" },
             new string[]{ "posthumously", "impressionist","decade","artworks","oil","landscapes","brushwork","depression","unsuccessful" },
             new string[]{ "asses","family","flies","recognisable","protected","distinctive","extant","inhabit","mountain"},
             new string[]{ "joints","laser","hazardous","automatic","molten","electrical","distinct","manual","parent"},
-            new string[]{ },
-            new string[]{ },
-            new string[]{ },
-            new string[]{ },
-            new string[]{ },
-            new string[]{ }
+            new string[]{ "team", "tier","successful","sextuple","red","titles"},
+            new string[]{ "conveyed","covers","perishable","final","facility","designed","handling"},
+            new string[]{ "broad", "form", "study", "thread", "groups", "medicine", "letters", "essential", "major", "applying", "values"},
+            new string[]{ "verifiable", "records", "taxes", "country", "systems", "services", "distinguished", "types", "accepted" },
+            new string[]{ "major", "time", "investigations", "grant ", "activities", "removed", "burglars", "articles", "resignation" }
         };
 
         public List<SelectListItem> Options { set; get; }
@@ -69,9 +69,9 @@ namespace AdventCalendarWebApp.Pages._2021
             DateTime? startOfGuessing = null)
         {
             var hasAccess = dayValidation.HasAccess2020(day);
-            if (!hasAccess)
+            if (day % 2 == 1 || !hasAccess)
             {
-                return RedirectToPage("Index", new { invalidDoor = day });
+                return NotFound();
             }
             Day = day;
             StartOfGuessing = startOfGuessing ?? DateTime.UtcNow;
