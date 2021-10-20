@@ -9,8 +9,8 @@ namespace AdventcalendarTest.Helper.Adventia
         [TestMethod]
         public void CleanupTest()
         {
-            var result = WordSelection.Cleanup("1234567890-_)(*&^%$#@!,./;'\\][<>?:\" |}{ÖÄÜöäüßqwertzuioplkjhgfdsayxcvbnmQWERTZUIOPLKJHGFDSAYXCVBNM");
-            Assert.AreEqual(26 + 26 + 7, result.Length);
+            var result = WordSelection.Cleanup("1234567890-_)(*&^%$#@!,./;'\\][<>?:\"|}{ÖÄÜöäüßqwertzuioplkjhgfdsayxcvbnmQWERTZUIOPLKJHGFDSAYXCVBNM");
+            Assert.AreEqual(1+26 + 26 + 7, result.Length);//1 for the period that converts to a space
         }
     }
 }
