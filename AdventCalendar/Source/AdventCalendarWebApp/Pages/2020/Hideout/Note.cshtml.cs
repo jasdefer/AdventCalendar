@@ -16,7 +16,7 @@ namespace AdventCalendarWebApp.Pages._2020.Hideout
 
         public IActionResult OnGet()
         {
-            if (!dayValidation.HasAccess(door))
+            if (!dayValidation.HasAccess2020(door))
             {
                 return NotFound();
             }

@@ -7,7 +7,7 @@ namespace AdventCalendarWebApp.Helper.TimeProvider
         public static int DoorIndex = 24;
         public DateTime Now()
         {
-            return Dates.Doors2020[DoorIndex];
+            return Dates.Doors2021[DoorIndex];
         }
     }
 }

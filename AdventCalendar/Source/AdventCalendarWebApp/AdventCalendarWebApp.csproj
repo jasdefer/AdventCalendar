@@ -56,7 +56,6 @@ Initial release</PackageReleaseNotes>
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Pages\2021\" />
     <Folder Include="wwwroot\images\" />
   </ItemGroup>
 

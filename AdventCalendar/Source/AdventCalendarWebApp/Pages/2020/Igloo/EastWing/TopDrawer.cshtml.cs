@@ -33,7 +33,7 @@ namespace AdventCalendarWebApp.Pages._2020.Igloo.EastWing
             {
                 return Page();
             }
-            if (!dayValidation.HasAccess(1))
+            if (!dayValidation.HasAccess2020(1))
             {
                 ModelState.AddModelError(string.Empty, "Some magic inside the lock prevents it to be opened before the correct time has come.");
                 return Page();
