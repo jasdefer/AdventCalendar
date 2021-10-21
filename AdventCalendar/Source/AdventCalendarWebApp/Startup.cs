@@ -36,6 +36,7 @@ namespace AdventCalendarWebApp
                 services.AddTransient<ITimeProvider, UtcTimeProvider>();
             }
             services.AddTransient<DayValidation>();
+            services.AddTransient<AzureHelper>();
             services.AddDistributedMemoryCache();
 
             services.AddSession(options =>
@@ -52,6 +53,8 @@ namespace AdventCalendarWebApp
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseSession();
+                app.UseMiddleware<StatisticLogger>();
             }
             else
             {
@@ -62,8 +65,7 @@ namespace AdventCalendarWebApp
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
-            app.UseSession();
-            app.UseMiddleware<StatisticLogger>();
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();

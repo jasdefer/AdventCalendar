@@ -5,12 +5,14 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace AdventCalendarWebApp.Pages._2021
 {
     public class WikiPagePickerModel : PageModel
     {
         private readonly DayValidation dayValidation;
+        private readonly AzureHelper azureHelper;
         public static readonly IReadOnlyList<IReadOnlyList<string>> OptionStrings = new string[12][]
         {
             new string[]{ "Bill Gates","Warren Buffet","Mark Zuckerberg", "Batman", "Tintin" },
@@ -58,12 +60,14 @@ namespace AdventCalendarWebApp.Pages._2021
         public DateTime StartOfGuessing { get; set; }
         public TimeSpan SolveDuration => DateTime.UtcNow - StartOfGuessing;
 
-        public WikiPagePickerModel(DayValidation dayValidation)
+        public WikiPagePickerModel(DayValidation dayValidation,
+            AzureHelper azureHelper)
         {
             this.dayValidation = dayValidation;
+            this.azureHelper = azureHelper;
         }
 
-        public IActionResult OnGet(int day,
+        public async Task<IActionResult> OnGet(int day,
             int? answer,
             int numberOfGuesses = 0,
             DateTime? startOfGuessing = null)
@@ -83,7 +87,26 @@ namespace AdventCalendarWebApp.Pages._2021
             NumberOfGuesses = ++numberOfGuesses;
             Answer = answer;
             ValidationState = answer.Value == CorrectOptions[Index] ? ValidationState.Correct : ValidationState.Incorrect;
+            await LogWikiPagePick(answer.Value);
+            
             return Page();
+        }
+
+        private async Task LogWikiPagePick(int answer)
+        {
+            var userId = HttpContext.GetOrCreateUserId();
+            var wikiPagePick = new WikiPagePick()
+            {
+                PartitionKey = userId,
+                RowKey = Guid.NewGuid().ToString(),
+                UserId = userId,
+                Day = Day,
+                Pick = answer,
+                SolveDuration = SolveDuration,
+                NumberOfGuesses = NumberOfGuesses,
+                IsCorrect = ValidationState == ValidationState.Correct
+            };
+            await azureHelper.AddObjectAsync("WikiPagePicks", wikiPagePick);
         }
 
         private void SetupOptions(int index)

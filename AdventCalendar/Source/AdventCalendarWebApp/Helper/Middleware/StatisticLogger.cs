@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AdventCalendarWebApp.Model;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
+using Microsoft.Azure.Cosmos.Table;
 using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
@@ -12,31 +14,23 @@ namespace AdventCalendarWebApp.Helper.Middleware
     {
         private readonly ILogger<StatisticLogger> logger;
         private readonly RequestDelegate _next;
+        private readonly AzureHelper azureHelper;
         private const string GetLogFileSuffix = "getlogs.csv";
         private const string PostLogFileSuffix = "postlogs.csv";
         public const string LogDir = "Logs/";
 
 
-        public StatisticLogger(ILogger<StatisticLogger> logger, RequestDelegate next)
+        public StatisticLogger(ILogger<StatisticLogger> logger,
+            RequestDelegate next,
+            AzureHelper azureHelper)
         {
             this.logger = logger;
             _next = next;
+            this.azureHelper = azureHelper;
             if (!Directory.Exists(LogDir))
             {
                 Directory.CreateDirectory(LogDir);
             }
-        }
-
-        public static string GetGetLogFileName(DateTime date)
-        {
-            var fileName = $"{LogDir}{date.Date:yyyyMMdd}-{GetLogFileSuffix}";
-            return fileName;
-        }
-
-        public static string GetPostLogFileName(DateTime date)
-        {
-            var fileName = $"{LogDir}{date.Date:yyyyMMdd}-{PostLogFileSuffix}";
-            return fileName;
         }
 
         public async Task InvokeAsync(HttpContext context)
@@ -56,32 +50,20 @@ namespace AdventCalendarWebApp.Helper.Middleware
 
         private async Task AddLog(HttpContext context)
         {
-            var userId = context.Session.GetString("UserId");
-            if (string.IsNullOrEmpty(userId))
-            {
-                userId = Guid.NewGuid().ToString();
-                context.Session.SetString("UserId", userId);
-            }
+
+            var userId = context.GetOrCreateUserId();
             var requestedUrl = UriHelper.GetDisplayUrl(context.Request);
-            var now = DateTime.UtcNow;
-            string message;
-            string fileName;
-            if (context.Request.Method == "GET")
+            var requestedTimestamp = DateTime.UtcNow;
+            var httpRequestLog = new HttpRequestLog()
             {
-                message = $"{now}\t{userId}\t{requestedUrl}\r\n";
-                fileName = GetGetLogFileName(now);
-            }
-            else if (context.Request.Method == "POST")
-            {
-                var formContent = string.Join('\t', context.Request.Form.Where(x => x.Key != "__RequestVerificationToken").Select(x => string.Join('\t', x.Value)));
-                message = $"{now}\t{userId}\t{requestedUrl}\t{formContent}\r\n";
-                fileName = GetPostLogFileName(now);
-            }
-            else
-            {
-                return;
-            }
-            await File.AppendAllTextAsync(fileName, message);
+                RequestTimestamp = DateTime.UtcNow,
+                Method = context.Request.Method,
+                Url = requestedUrl,
+                UserId = userId,
+                PartitionKey = userId,
+                RowKey = requestedTimestamp.Ticks.ToString()
+            };
+            await azureHelper.AddObjectAsync("AdventCalendarHttpRequests", httpRequestLog);
         }
     }
 }

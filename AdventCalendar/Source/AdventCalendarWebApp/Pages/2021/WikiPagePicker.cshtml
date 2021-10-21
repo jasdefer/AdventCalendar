@@ -29,7 +29,7 @@ else if(Model.ValidationState == ValidationState.Incorrect)
     {
         var answer = WikiPagePickerModel.OptionStrings[Model.Index][i];
         <a asp-page="WikiPagePicker"
-           class="list-group-item list-group-item-action@(i==Model.Answer?" active":"")"
+           class="list-group-item list-group-item-action@(i==Model.Answer?" active":"")@(Model.ValidationState==ValidationState.Correct?" disabled":"")"
            asp-route-day="@Model.Day"
            asp-route-numberOfGuesses="@Model.NumberOfGuesses"
            asp-route-startOfGuessing="@Model.StartOfGuessing"

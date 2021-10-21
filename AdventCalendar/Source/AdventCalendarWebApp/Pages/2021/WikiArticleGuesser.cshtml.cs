@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace AdventCalendarWebApp.Pages._2021
 {
@@ -44,6 +45,7 @@ namespace AdventCalendarWebApp.Pages._2021
         };
 
         private readonly DayValidation dayValidation;
+        private readonly AzureHelper azureHelper;
 
         public ValidationState ValidationState { get; private set; } = ValidationState.NotValidated;
 
@@ -61,12 +63,14 @@ namespace AdventCalendarWebApp.Pages._2021
         public int Index => Day / 2;
         public TimeSpan SolveDuration => DateTime.UtcNow - StartOfGuessing;
 
-        public WikiArticleGuesserModel(DayValidation dayValidation)
+        public WikiArticleGuesserModel(DayValidation dayValidation,
+            AzureHelper azureHelper)
         {
             this.dayValidation = dayValidation;
+            this.azureHelper = azureHelper;
         }
 
-        public IActionResult OnGet(int day,
+        public async Task<IActionResult> OnGet(int day,
             int numberOfHints = DefaultNumberOfHints,
             int numberOfGuesses = 0,
             string answer = null,
@@ -85,6 +89,8 @@ namespace AdventCalendarWebApp.Pages._2021
             {
                 return Page();
             }
+            NumberOfGuesses++;
+            
             if (answer.Trim().Equals(articles[Index].Replace("_", " "), StringComparison.InvariantCultureIgnoreCase))
             {
                 ValidationState = ValidationState.Correct;
@@ -95,9 +101,30 @@ namespace AdventCalendarWebApp.Pages._2021
                 NumberOfHints += NumberOfHintsPerTry;
                 NumberOfHints = Math.Min(NumberOfHints, Words[Index].Count);
             }
-            NumberOfGuesses++;
+            
             Answer = answer;
+            await LogWikiArticleGuess();
+
             return Page();
+        }
+
+        private async Task LogWikiArticleGuess()
+        {
+            var userId = HttpContext.GetOrCreateUserId();
+            var wikiArticleGuess = new WikiArticleGuess()
+            {
+                Day = Day,
+                Guess = Answer,
+                PartitionKey = userId,
+                RowKey = Guid.NewGuid().ToString(),
+                UserId = userId,
+                NumberOfGuesses = NumberOfGuesses,
+                NumberOfHints = NumberOfHints,
+                GuessTimestamp = DateTime.UtcNow,
+                IsCorrect = ValidationState == ValidationState.Correct,
+                SolveDuration = SolveDuration
+            };
+            await azureHelper.AddObjectAsync("WikiArticleGuesses", wikiArticleGuess);
         }
 
         public IActionResult OnPost()
