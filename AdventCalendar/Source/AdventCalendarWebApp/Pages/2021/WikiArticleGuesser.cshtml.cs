@@ -90,7 +90,7 @@ namespace AdventCalendarWebApp.Pages._2021
                 return Page();
             }
             NumberOfGuesses++;
-            
+
             if (answer.Trim().Equals(articles[Index].Replace("_", " "), StringComparison.InvariantCultureIgnoreCase))
             {
                 ValidationState = ValidationState.Correct;
@@ -101,7 +101,7 @@ namespace AdventCalendarWebApp.Pages._2021
                 NumberOfHints += NumberOfHintsPerTry;
                 NumberOfHints = Math.Min(NumberOfHints, Words[Index].Count);
             }
-            
+
             Answer = answer;
             await LogWikiArticleGuess();
 

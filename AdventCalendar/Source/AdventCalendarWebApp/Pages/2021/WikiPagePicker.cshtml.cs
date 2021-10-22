@@ -88,7 +88,7 @@ namespace AdventCalendarWebApp.Pages._2021
             Answer = answer;
             ValidationState = answer.Value == CorrectOptions[Index] ? ValidationState.Correct : ValidationState.Incorrect;
             await LogWikiPagePick(answer.Value);
-            
+
             return Page();
         }
 

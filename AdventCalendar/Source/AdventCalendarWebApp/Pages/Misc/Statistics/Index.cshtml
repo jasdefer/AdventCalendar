@@ -1,0 +1,13 @@
+﻿@page
+@model AdventCalendarWebApp.Pages.Misc.Statistics.IndexModel
+@{
+    ViewData["Title"] = "Statistics";
+}
+<p>
+    This is the hub for all page statistics.
+</p>
+<div class="list-group">
+    <a asp-page="NumberOfRequests" class="list-group-item list-group-item-action">Requests per url</a>
+    <a asp-page="RequestsOverTime" class="list-group-item list-group-item-action">Requests over time</a>
+    <a asp-page="RequestsPerUser" class="list-group-item list-group-item-action">Requests per User</a>
+</div>

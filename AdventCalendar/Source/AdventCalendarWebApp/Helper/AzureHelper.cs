@@ -2,9 +2,6 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace AdventCalendarWebApp.Helper
@@ -47,7 +44,7 @@ namespace AdventCalendarWebApp.Helper
             await table.ExecuteAsync(operation);
         }
 
-        public async Task AddObjectAsync<T>(string tableName, T value) where T: ITableEntity
+        public async Task AddObjectAsync<T>(string tableName, T value) where T : ITableEntity
         {
             try
             {

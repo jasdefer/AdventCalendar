@@ -1,11 +1,8 @@
 ﻿using AdventCalendarWebApp.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
-using Microsoft.Azure.Cosmos.Table;
 using Microsoft.Extensions.Logging;
 using System;
-using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace AdventCalendarWebApp.Helper.Middleware
@@ -15,10 +12,6 @@ namespace AdventCalendarWebApp.Helper.Middleware
         private readonly ILogger<StatisticLogger> logger;
         private readonly RequestDelegate _next;
         private readonly AzureHelper azureHelper;
-        private const string GetLogFileSuffix = "getlogs.csv";
-        private const string PostLogFileSuffix = "postlogs.csv";
-        public const string LogDir = "Logs/";
-
 
         public StatisticLogger(ILogger<StatisticLogger> logger,
             RequestDelegate next,
@@ -27,10 +20,6 @@ namespace AdventCalendarWebApp.Helper.Middleware
             this.logger = logger;
             _next = next;
             this.azureHelper = azureHelper;
-            if (!Directory.Exists(LogDir))
-            {
-                Directory.CreateDirectory(LogDir);
-            }
         }
 
         public async Task InvokeAsync(HttpContext context)
@@ -54,11 +43,20 @@ namespace AdventCalendarWebApp.Helper.Middleware
             var userId = context.GetOrCreateUserId();
             var requestedUrl = UriHelper.GetDisplayUrl(context.Request);
             var requestedTimestamp = DateTime.UtcNow;
+            var baseUrl = requestedUrl;
+            var arguments = string.Empty;
+            if (baseUrl.Contains('?'))
+            {
+                var urlSegements = requestedUrl.Split('?', 2);
+                baseUrl = urlSegements[0];
+                arguments = urlSegements[1];
+            }
             var httpRequestLog = new HttpRequestLog()
             {
                 RequestTimestamp = DateTime.UtcNow,
                 Method = context.Request.Method,
-                Url = requestedUrl,
+                BaseUrl = baseUrl,
+                Arguments = arguments,
                 UserId = userId,
                 PartitionKey = userId,
                 RowKey = requestedTimestamp.Ticks.ToString()

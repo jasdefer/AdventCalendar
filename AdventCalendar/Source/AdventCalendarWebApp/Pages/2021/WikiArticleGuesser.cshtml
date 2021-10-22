@@ -1,8 +1,9 @@
 ﻿@page
 @using AdventCalendarWebApp.Model;
 @model AdventCalendarWebApp.Pages._2021.WikiArticleGuesserModel
-
-<h1 class="display-4">Door @Model.Day</h1>
+@{
+    ViewData["Title"] = $"Door {Model.Day}";
+}
 <p>Try to guess a Wikipedia article based on random words of its content. With each wrong guess new hints appear.</p>
 <a asp-page="/Index" class="btn btn-outline-secondary mb-2">Go back</a>
 @if (Model.ValidationState == ValidationState.Correct)
