@@ -3,6 +3,7 @@ using AdventCalendarWebApp.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -13,6 +14,7 @@ namespace AdventCalendarWebApp.Pages._2021
     {
         private readonly DayValidation dayValidation;
         private readonly AzureHelper azureHelper;
+        private readonly IConfiguration configuration;
         public static readonly IReadOnlyList<IReadOnlyList<string>> OptionStrings = new string[12][]
         {
             new string[]{ "Bill Gates","Warren Buffet","Mark Zuckerberg", "Batman", "Tintin" },
@@ -61,10 +63,12 @@ namespace AdventCalendarWebApp.Pages._2021
         public TimeSpan SolveDuration => DateTime.UtcNow - StartOfGuessing;
 
         public WikiPagePickerModel(DayValidation dayValidation,
-            AzureHelper azureHelper)
+            AzureHelper azureHelper,
+            IConfiguration configuration)
         {
             this.dayValidation = dayValidation;
             this.azureHelper = azureHelper;
+            this.configuration = configuration;
         }
 
         public async Task<IActionResult> OnGet(int day,
@@ -106,7 +110,7 @@ namespace AdventCalendarWebApp.Pages._2021
                 NumberOfGuesses = NumberOfGuesses,
                 IsCorrect = ValidationState == ValidationState.Correct
             };
-            await azureHelper.AddObjectAsync("WikiPagePicks", wikiPagePick);
+            await azureHelper.AddObjectAsync(configuration["StorageData:2021WikiPagePicksTableName"], wikiPagePick);
         }
 
         private void SetupOptions(int index)

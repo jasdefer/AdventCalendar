@@ -2,6 +2,7 @@ using AdventCalendarWebApp.Helper;
 using AdventCalendarWebApp.Model;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Azure.Cosmos.Table;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,10 +14,13 @@ namespace AdventCalendarWebApp.Pages.Misc.Statistics._2021
         public record GuessData(string Guess, int NumberOfGuesses);
 
         private readonly AzureHelper azureHelper;
+        private readonly IConfiguration configuration;
 
-        public WikiArticleGuessesModel(AzureHelper azureHelper)
+        public WikiArticleGuessesModel(AzureHelper azureHelper,
+            IConfiguration configuration)
         {
             this.azureHelper = azureHelper;
+            this.configuration = configuration;
         }
 
         public IReadOnlyList<GuessData> Guesses { get; set; }
@@ -28,7 +32,7 @@ namespace AdventCalendarWebApp.Pages.Misc.Statistics._2021
         {
             day = Math.Max(1, day);
             Day = day;
-            var table = azureHelper.GetTableReference("WikiArticleGuesses");
+            var table = azureHelper.GetTableReference(configuration["StorageData:2021WikiArticleGuessesTableName"]);
             var query = new TableQuery<WikiArticleGuess>()
                 .Where($"{nameof(WikiArticleGuess.Day)} eq {day}");
             var result = table.ExecuteQuery(query).ToArray();

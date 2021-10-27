@@ -2,6 +2,7 @@ using AdventCalendarWebApp.Helper;
 using AdventCalendarWebApp.Model;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Azure.Cosmos.Table;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,10 +14,13 @@ namespace AdventCalendarWebApp.Pages.Misc.Statistics
         public record RequestsPerDay(DateTime Day, int NumberOfRequests);
 
         private readonly AzureHelper azureHelper;
+        private readonly IConfiguration configuration;
 
-        public RequestsOfUserModel(AzureHelper azureHelper)
+        public RequestsOfUserModel(AzureHelper azureHelper,
+            IConfiguration configuration)
         {
             this.azureHelper = azureHelper;
+            this.configuration = configuration;
         }
 
         public IReadOnlyList<RequestsPerDay> Requests { get; set; }
@@ -29,7 +33,7 @@ namespace AdventCalendarWebApp.Pages.Misc.Statistics
                 userId = HttpContext.GetOrCreateUserId();
             }
             UserId = userId;
-            var table = azureHelper.GetTableReference("AdventCalendarHttpRequests");
+            var table = azureHelper.GetTableReference(configuration["StorageData:RequestTableName"]);
             var query = new TableQuery<HttpRequestLog>()
                 .Where(TableQuery.GenerateFilterCondition(nameof(HttpRequestLog.UserId), QueryComparisons.Equal, userId));
             var result = table.ExecuteQuery(query);

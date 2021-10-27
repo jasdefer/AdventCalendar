@@ -2,6 +2,7 @@ using AdventCalendarWebApp.Helper;
 using AdventCalendarWebApp.Model;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Azure.Cosmos.Table;
+using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -15,17 +16,20 @@ namespace AdventCalendarWebApp.Pages.Misc.Statistics._2021
             double AverageSolveSeconds);
 
         private readonly AzureHelper azureHelper;
+        private readonly IConfiguration configuration;
 
         public IReadOnlyList<DayStat> DayStats { get; set; }
 
-        public OverviewModel(AzureHelper azureHelper)
+        public OverviewModel(AzureHelper azureHelper,
+            IConfiguration configuration)
         {
             this.azureHelper = azureHelper;
+            this.configuration = configuration;
         }
 
         public void OnGet()
         {
-            var table = azureHelper.GetTableReference("WikiArticleGuesses");
+            var table = azureHelper.GetTableReference(configuration["StorageData:2021WikiArticleGuessesTableName"]);
             var articleGuessQuery = new TableQuery<WikiArticleGuess>();
             var articleGuessResult = table.ExecuteQuery(articleGuessQuery).ToArray();
             var dayStats = articleGuessResult
@@ -35,7 +39,7 @@ namespace AdventCalendarWebApp.Pages.Misc.Statistics._2021
                     x.Where(y => y.IsCorrect).Count(),
                     x.Where(y => y.IsCorrect).Count() < 1 ? 0d : x.Where(y => y.IsCorrect).Average(y => y.SolveDurationSeconds)))
                 .ToList();
-            table = azureHelper.GetTableReference("WikiPagePicks");
+            table = azureHelper.GetTableReference(configuration["StorageData:2021WikiPagePicksTableName"]);
             var pagePickQuery = new TableQuery<WikiPagePick>();
             var pagePickResult = table.ExecuteQuery(pagePickQuery).ToArray();
             dayStats.AddRange(pagePickResult

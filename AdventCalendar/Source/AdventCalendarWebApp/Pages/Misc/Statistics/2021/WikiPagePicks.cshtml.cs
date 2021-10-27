@@ -3,6 +3,7 @@ using AdventCalendarWebApp.Model;
 using AdventCalendarWebApp.Pages._2021;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Azure.Cosmos.Table;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,10 +15,13 @@ namespace AdventCalendarWebApp.Pages.Misc.Statistics._2021
         public record PickData(string Pick, int NumberOfAttempts);
 
         private readonly AzureHelper azureHelper;
+        private readonly IConfiguration configuration;
 
-        public WikiPagePicksModel(AzureHelper azureHelper)
+        public WikiPagePicksModel(AzureHelper azureHelper,
+            IConfiguration configuration)
         {
             this.azureHelper = azureHelper;
+            this.configuration = configuration;
         }
 
         public IReadOnlyList<PickData> Picks { get; set; }
@@ -29,7 +33,7 @@ namespace AdventCalendarWebApp.Pages.Misc.Statistics._2021
         {
             day = Math.Max(2, day);
             Day = day;
-            var table = azureHelper.GetTableReference("WikiPagePicks");
+            var table = azureHelper.GetTableReference(configuration["StorageData:2021WikiPagePicksTableName"]);
             var query = new TableQuery<WikiPagePick>()
                 .Where($"{nameof(WikiPagePick.Day)} eq {day}");
             var result = table.ExecuteQuery(query).ToArray();

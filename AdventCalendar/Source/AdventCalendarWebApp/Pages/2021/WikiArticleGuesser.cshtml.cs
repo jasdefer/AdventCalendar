@@ -2,6 +2,7 @@ using AdventCalendarWebApp.Helper;
 using AdventCalendarWebApp.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -46,6 +47,7 @@ namespace AdventCalendarWebApp.Pages._2021
 
         private readonly DayValidation dayValidation;
         private readonly AzureHelper azureHelper;
+        private readonly IConfiguration configuration;
 
         public ValidationState ValidationState { get; private set; } = ValidationState.NotValidated;
 
@@ -64,10 +66,12 @@ namespace AdventCalendarWebApp.Pages._2021
         public TimeSpan SolveDuration => DateTime.UtcNow - StartOfGuessing;
 
         public WikiArticleGuesserModel(DayValidation dayValidation,
-            AzureHelper azureHelper)
+            AzureHelper azureHelper,
+            IConfiguration configuration)
         {
             this.dayValidation = dayValidation;
             this.azureHelper = azureHelper;
+            this.configuration = configuration;
         }
 
         public async Task<IActionResult> OnGet(int day,
@@ -124,7 +128,7 @@ namespace AdventCalendarWebApp.Pages._2021
                 IsCorrect = ValidationState == ValidationState.Correct,
                 SolveDurationSeconds = SolveDuration.TotalSeconds
             };
-            await azureHelper.AddObjectAsync("WikiArticleGuesses", wikiArticleGuess);
+            await azureHelper.AddObjectAsync(configuration["StorageData:2021WikiArticleGuessesTableName"], wikiArticleGuess);
         }
 
         public IActionResult OnPost()
