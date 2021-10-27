@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AdventCalendarWebApp.Model;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
-using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace AdventCalendarWebApp.Helper.Middleware
@@ -12,31 +12,18 @@ namespace AdventCalendarWebApp.Helper.Middleware
     {
         private readonly ILogger<StatisticLogger> logger;
         private readonly RequestDelegate _next;
-        private const string GetLogFileSuffix = "getlogs.csv";
-        private const string PostLogFileSuffix = "postlogs.csv";
-        public const string LogDir = "Logs/";
+        private readonly AzureHelper azureHelper;
+        private readonly IConfiguration configuration;
 
-
-        public StatisticLogger(ILogger<StatisticLogger> logger, RequestDelegate next)
+        public StatisticLogger(ILogger<StatisticLogger> logger,
+            RequestDelegate next,
+            AzureHelper azureHelper,
+            IConfiguration configuration)
         {
             this.logger = logger;
             _next = next;
-            if (!Directory.Exists(LogDir))
-            {
-                Directory.CreateDirectory(LogDir);
-            }
-        }
-
-        public static string GetGetLogFileName(DateTime date)
-        {
-            var fileName = $"{LogDir}{date.Date:yyyyMMdd}-{GetLogFileSuffix}";
-            return fileName;
-        }
-
-        public static string GetPostLogFileName(DateTime date)
-        {
-            var fileName = $"{LogDir}{date.Date:yyyyMMdd}-{PostLogFileSuffix}";
-            return fileName;
+            this.azureHelper = azureHelper;
+            this.configuration = configuration;
         }
 
         public async Task InvokeAsync(HttpContext context)
@@ -56,32 +43,29 @@ namespace AdventCalendarWebApp.Helper.Middleware
 
         private async Task AddLog(HttpContext context)
         {
-            var userId = context.Session.GetString("UserId");
-            if (string.IsNullOrEmpty(userId))
-            {
-                userId = Guid.NewGuid().ToString();
-                context.Session.SetString("UserId", userId);
-            }
+
+            var userId = context.GetOrCreateUserId();
             var requestedUrl = UriHelper.GetDisplayUrl(context.Request);
-            var now = DateTime.UtcNow;
-            string message;
-            string fileName;
-            if (context.Request.Method == "GET")
+            var requestedTimestamp = DateTime.UtcNow;
+            var baseUrl = requestedUrl;
+            var arguments = string.Empty;
+            if (baseUrl.Contains('?'))
             {
-                message = $"{now}\t{userId}\t{requestedUrl}\r\n";
-                fileName = GetGetLogFileName(now);
+                var urlSegements = requestedUrl.Split('?', 2);
+                baseUrl = urlSegements[0];
+                arguments = urlSegements[1];
             }
-            else if (context.Request.Method == "POST")
+            var httpRequestLog = new HttpRequestLog()
             {
-                var formContent = string.Join('\t', context.Request.Form.Where(x => x.Key != "__RequestVerificationToken").Select(x => string.Join('\t', x.Value)));
-                message = $"{now}\t{userId}\t{requestedUrl}\t{formContent}\r\n";
-                fileName = GetPostLogFileName(now);
-            }
-            else
-            {
-                return;
-            }
-            await File.AppendAllTextAsync(fileName, message);
+                RequestTimestamp = DateTime.UtcNow,
+                Method = context.Request.Method,
+                BaseUrl = baseUrl,
+                Arguments = arguments,
+                UserId = userId,
+                PartitionKey = userId,
+                RowKey = requestedTimestamp.Ticks.ToString()
+            };
+            await azureHelper.AddObjectAsync(configuration["StorageData:RequestTableName"], httpRequestLog);
         }
     }
 }

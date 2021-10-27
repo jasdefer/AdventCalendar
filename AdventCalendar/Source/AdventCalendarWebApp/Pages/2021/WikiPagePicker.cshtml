@@ -2,8 +2,8 @@
 @using AdventCalendarWebApp.Model;
 @model AdventCalendarWebApp.Pages._2021.WikiPagePickerModel
 @{
+    ViewData["Title"] = $"Door {Model.Day}";
 }
-<h1 class="display-4">Door @Model.Day</h1>
 <p>Try to pick the correct Wikipedia article based on random words of its content.</p>
 <a asp-page="/Index" class="btn btn-outline-secondary mb-2">Go back</a>
 @if (Model.ValidationState == ValidationState.Correct)
@@ -17,19 +17,19 @@
         You spend @Model.SolveDuration.ToString(@"hh\:mm\:ss") to solve this one.
     </div>
 }
-else if(Model.ValidationState == ValidationState.Incorrect)
-            {
-                <div class="alert alert-danger">
-                    No, your answer is incorrect
-                </div>
-            }
+else if (Model.ValidationState == ValidationState.Incorrect)
+{
+    <div class="alert alert-danger">
+        No, your answer is incorrect
+    </div>
+}
 <p class="mt-3">Pick on of the following articles</p>
 <div class="list-group">
-    @for(int i = 0; i < WikiPagePickerModel.OptionStrings[Model.Index].Count;i++)
+    @for (int i = 0; i < WikiPagePickerModel.OptionStrings[Model.Index].Count; i++)
     {
         var answer = WikiPagePickerModel.OptionStrings[Model.Index][i];
         <a asp-page="WikiPagePicker"
-           class="list-group-item list-group-item-action@(i==Model.Answer?" active":"")"
+           class="list-group-item list-group-item-action@(i==Model.Answer?" active":"")@(Model.ValidationState==ValidationState.Correct?" disabled":"")"
            asp-route-day="@Model.Day"
            asp-route-numberOfGuesses="@Model.NumberOfGuesses"
            asp-route-startOfGuessing="@Model.StartOfGuessing"
