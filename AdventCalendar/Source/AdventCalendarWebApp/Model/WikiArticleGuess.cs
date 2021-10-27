@@ -12,6 +12,6 @@ namespace AdventCalendarWebApp.Model
         public bool IsCorrect { get; set; }
         public int NumberOfHints { get; set; }
         public int NumberOfGuesses { get; set; }
-        public TimeSpan SolveDuration { get; set; }
+        public double SolveDurationSeconds { get; set; }
     }
 }

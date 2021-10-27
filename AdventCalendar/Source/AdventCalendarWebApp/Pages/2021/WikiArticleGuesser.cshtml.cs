@@ -122,7 +122,7 @@ namespace AdventCalendarWebApp.Pages._2021
                 NumberOfHints = NumberOfHints,
                 GuessTimestamp = DateTime.UtcNow,
                 IsCorrect = ValidationState == ValidationState.Correct,
-                SolveDuration = SolveDuration
+                SolveDurationSeconds = SolveDuration.TotalSeconds
             };
             await azureHelper.AddObjectAsync("WikiArticleGuesses", wikiArticleGuess);
         }

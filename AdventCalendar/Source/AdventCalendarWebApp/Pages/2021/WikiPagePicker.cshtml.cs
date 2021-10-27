@@ -102,7 +102,7 @@ namespace AdventCalendarWebApp.Pages._2021
                 UserId = userId,
                 Day = Day,
                 Pick = answer,
-                SolveDuration = SolveDuration,
+                SolveDurationSeconds = SolveDuration.TotalSeconds,
                 NumberOfGuesses = NumberOfGuesses,
                 IsCorrect = ValidationState == ValidationState.Correct
             };
