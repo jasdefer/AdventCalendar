@@ -30,7 +30,7 @@ namespace AdventCalendarWebApp.Pages.Helper
             {
                 return Page();
             }
-            if (index < 0 || index > 24)
+            if (index < 0 || index > 25)
             {
                 index = 0;
             }

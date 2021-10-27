@@ -1,6 +1,7 @@
 using AdventCalendarWebApp.Helper;
 using AdventCalendarWebApp.Model;
 using AdventCalendarWebApp.Pages._2021;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Azure.Cosmos.Table;
 using Microsoft.Extensions.Configuration;
@@ -16,12 +17,15 @@ namespace AdventCalendarWebApp.Pages.Misc.Statistics._2021
 
         private readonly AzureHelper azureHelper;
         private readonly IConfiguration configuration;
+        private readonly DayValidation dayValidation;
 
         public WikiPagePicksModel(AzureHelper azureHelper,
-            IConfiguration configuration)
+            IConfiguration configuration,
+            DayValidation dayValidation)
         {
             this.azureHelper = azureHelper;
             this.configuration = configuration;
+            this.dayValidation = dayValidation;
         }
 
         public IReadOnlyList<PickData> Picks { get; set; }
@@ -29,10 +33,14 @@ namespace AdventCalendarWebApp.Pages.Misc.Statistics._2021
         public int NumberOfCorrectSolutions { get; set; }
         public int Day { get; set; }
 
-        public void OnGet(int day)
+        public IActionResult OnGet(int day)
         {
             day = Math.Max(2, day);
             Day = day;
+            if (!dayValidation.HasAccess2021(day + 1))
+            {
+                return NotFound();
+            }
             var table = azureHelper.GetTableReference(configuration["StorageData:2021WikiPagePicksTableName"]);
             var query = new TableQuery<WikiPagePick>()
                 .Where($"{nameof(WikiPagePick.Day)} eq {day}");
@@ -51,6 +59,7 @@ namespace AdventCalendarWebApp.Pages.Misc.Statistics._2021
                 AverageSolveDuration = TimeSpan.FromSeconds(Math.Round(durations.Average()));
             }
             NumberOfCorrectSolutions = result.Where(x => x.IsCorrect).GroupBy(x => x.UserId).Count();
+            return Page();
         }
     }
 }

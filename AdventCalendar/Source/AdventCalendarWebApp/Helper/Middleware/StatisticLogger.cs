@@ -1,4 +1,5 @@
-﻿using AdventCalendarWebApp.Model;
+﻿using AdventCalendarWebApp.Helper.TimeProvider;
+using AdventCalendarWebApp.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.Extensions.Configuration;
@@ -14,16 +15,19 @@ namespace AdventCalendarWebApp.Helper.Middleware
         private readonly RequestDelegate _next;
         private readonly AzureHelper azureHelper;
         private readonly IConfiguration configuration;
+        private readonly ITimeProvider timeProvider;
 
         public StatisticLogger(ILogger<StatisticLogger> logger,
             RequestDelegate next,
             AzureHelper azureHelper,
-            IConfiguration configuration)
+            IConfiguration configuration,
+            ITimeProvider timeProvider)
         {
             this.logger = logger;
             _next = next;
             this.azureHelper = azureHelper;
             this.configuration = configuration;
+            this.timeProvider = timeProvider;
         }
 
         public async Task InvokeAsync(HttpContext context)
@@ -46,7 +50,7 @@ namespace AdventCalendarWebApp.Helper.Middleware
 
             var userId = context.GetOrCreateUserId();
             var requestedUrl = UriHelper.GetDisplayUrl(context.Request);
-            var requestedTimestamp = DateTime.UtcNow;
+            var requestedTimestamp = timeProvider.Now();
             var baseUrl = requestedUrl;
             var arguments = string.Empty;
             if (baseUrl.Contains('?'))
@@ -57,13 +61,13 @@ namespace AdventCalendarWebApp.Helper.Middleware
             }
             var httpRequestLog = new HttpRequestLog()
             {
-                RequestTimestamp = DateTime.UtcNow,
+                RequestTimestamp = requestedTimestamp,
                 Method = context.Request.Method,
                 BaseUrl = baseUrl,
                 Arguments = arguments,
                 UserId = userId,
                 PartitionKey = userId,
-                RowKey = requestedTimestamp.Ticks.ToString()
+                RowKey = Guid.NewGuid().ToString()
             };
             await azureHelper.AddObjectAsync(configuration["StorageData:RequestTableName"], httpRequestLog);
         }

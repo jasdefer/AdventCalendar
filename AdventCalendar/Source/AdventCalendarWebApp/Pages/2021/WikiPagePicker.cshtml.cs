@@ -1,4 +1,5 @@
 using AdventCalendarWebApp.Helper;
+using AdventCalendarWebApp.Helper.TimeProvider;
 using AdventCalendarWebApp.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -15,6 +16,7 @@ namespace AdventCalendarWebApp.Pages._2021
         private readonly DayValidation dayValidation;
         private readonly AzureHelper azureHelper;
         private readonly IConfiguration configuration;
+        private readonly ITimeProvider timeProvider;
         public static readonly IReadOnlyList<IReadOnlyList<string>> OptionStrings = new string[12][]
         {
             new string[]{ "Bill Gates","Warren Buffet","Mark Zuckerberg", "Batman", "Tintin" },
@@ -60,15 +62,17 @@ namespace AdventCalendarWebApp.Pages._2021
         public int? Answer { get; set; }
         public int NumberOfGuesses { get; set; }
         public DateTime StartOfGuessing { get; set; }
-        public TimeSpan SolveDuration => DateTime.UtcNow - StartOfGuessing;
+        public TimeSpan SolveDuration => timeProvider.Now() - StartOfGuessing;
 
         public WikiPagePickerModel(DayValidation dayValidation,
             AzureHelper azureHelper,
-            IConfiguration configuration)
+            IConfiguration configuration,
+            ITimeProvider timeProvider)
         {
             this.dayValidation = dayValidation;
             this.azureHelper = azureHelper;
             this.configuration = configuration;
+            this.timeProvider = timeProvider;
         }
 
         public async Task<IActionResult> OnGet(int day,
@@ -82,7 +86,7 @@ namespace AdventCalendarWebApp.Pages._2021
                 return NotFound();
             }
             Day = day;
-            StartOfGuessing = startOfGuessing ?? DateTime.UtcNow;
+            StartOfGuessing = startOfGuessing ?? timeProvider.Now();
             SetupOptions(Index);
             if (!answer.HasValue)
             {

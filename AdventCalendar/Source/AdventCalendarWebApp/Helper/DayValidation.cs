@@ -20,11 +20,11 @@ namespace AdventCalendarWebApp.Helper
         public bool HasAccess2021(int day)
         {
             var now = timeProvider.Now();
-            if (day >= Dates.Doors2020.Length || day < 0)
+            if (day >= Dates.Doors2021.Length || day < 0)
             {
                 return false;
             }
-            return now >= Dates.Doors2020[day];
+            return now >= Dates.Doors2021[day];
         }
     }
 }

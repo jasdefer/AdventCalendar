@@ -1,4 +1,5 @@
 using AdventCalendarWebApp.Helper;
+using AdventCalendarWebApp.Helper.TimeProvider;
 using AdventCalendarWebApp.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -64,6 +65,7 @@ namespace AdventCalendarWebApp.Pages._2021
         private readonly DayValidation dayValidation;
         private readonly AzureHelper azureHelper;
         private readonly IConfiguration configuration;
+        private readonly ITimeProvider timeProvider;
 
         public ValidationState ValidationState { get; private set; } = ValidationState.NotValidated;
 
@@ -79,15 +81,17 @@ namespace AdventCalendarWebApp.Pages._2021
         public DateTime StartOfGuessing { get; set; }
 
         public int Index => Day / 2;
-        public TimeSpan SolveDuration => DateTime.UtcNow - StartOfGuessing;
+        public TimeSpan SolveDuration => timeProvider.Now() - StartOfGuessing;
 
         public WikiArticleGuesserModel(DayValidation dayValidation,
             AzureHelper azureHelper,
-            IConfiguration configuration)
+            IConfiguration configuration,
+            ITimeProvider timeProvider)
         {
             this.dayValidation = dayValidation;
             this.azureHelper = azureHelper;
             this.configuration = configuration;
+            this.timeProvider = timeProvider;
         }
 
         public async Task<IActionResult> OnGet(int day,
@@ -104,7 +108,7 @@ namespace AdventCalendarWebApp.Pages._2021
             }
             NumberOfHints = Math.Max(DefaultNumberOfHints, Math.Min(numberOfHints, Words[Index].Count - 1));
             NumberOfGuesses = Math.Max(0, numberOfGuesses);
-            StartOfGuessing = startOfGuessing ?? DateTime.UtcNow;
+            StartOfGuessing = startOfGuessing ?? timeProvider.Now();
             if (string.IsNullOrEmpty(answer))
             {
                 return Page();
@@ -140,7 +144,7 @@ namespace AdventCalendarWebApp.Pages._2021
                 UserId = userId,
                 NumberOfGuesses = NumberOfGuesses,
                 NumberOfHints = NumberOfHints,
-                GuessTimestamp = DateTime.UtcNow,
+                GuessTimestamp = timeProvider.Now(),
                 IsCorrect = ValidationState == ValidationState.Correct,
                 SolveDurationSeconds = SolveDuration.TotalSeconds
             };

@@ -60,6 +60,7 @@ namespace AdventCalendarWebApp.Helper.TimeProvider
             new DateTime(2021, 12, 22),
             new DateTime(2021, 12, 23),
             new DateTime(2021, 12, 24),
+            new DateTime(2021, 12, 25),
         };
     }
 }
