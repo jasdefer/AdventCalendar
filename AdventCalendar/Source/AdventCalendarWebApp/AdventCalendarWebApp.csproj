@@ -10,8 +10,12 @@
     <PackageId>AdventCalendarWebApp</PackageId>
     <Company />
     <Product>Advent Calendar</Product>
-    <Version>0.4.7</Version>
-    <PackageReleaseNotes>0.4.7
+    <Version>1.0.0</Version>
+    <PackageReleaseNotes>1.0.0
+Added the Wikipedia Advent calendar 2021
+Added logging to Azure storage
+Added statistic analysis
+0.4.7
 Added note 24
 0.4.6
 Fixed the link to note 22
