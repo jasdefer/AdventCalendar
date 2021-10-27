@@ -1,0 +1,111 @@
+﻿@page
+@model AdventCalendarWebApp.Pages.Misc.Statistics._2021.OverviewModel
+@{
+    ViewData["Title"] = $"Overview of the 2021 Advent calendar interactions";
+}
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+        <p>
+            See the numbers of correct and incorrect attempts for each day.
+        </p>
+        <div>
+            <canvas id="attempts"></canvas>
+        </div>
+    </div>
+    <div class="col-lg-10 mt-5">
+        <p>
+            See the average solve time for each day.
+        </p>
+        <div>
+            <canvas id="solvetime"></canvas>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        var customOptions = {
+            plugins: {
+                legend: {
+                    display: true
+                }
+            },
+            scales: {
+                x: {
+                    stacked: true,
+                    grid: {
+                        display: false
+                    }
+                },
+                y: {
+                    stacked: true,
+                    grid: {
+                        display: false
+                    }
+                }
+            }
+        };
+        var labels = ['@Html.Raw(string.Join("','", Model.DayStats.Select(x => x.Day)))'];
+        var data = {
+            labels: labels,
+            datasets: [{
+                label:"Number of correct attempts",
+                backgroundColor: 'rgb(251, 192, 45)',
+                data: [@Html.Raw(string.Join(",",Model.DayStats.Select(x => x.NumberOfCorrectAttempts)))],
+            },
+                {
+                label:"Number of incorrect attempts",
+                backgroundColor: 'rgb(45, 103, 251)',
+                data: [@Html.Raw(string.Join(",",Model.DayStats.Select(x => x.NumberOfIncorrectAttempts)))],
+            }]
+        };
+        var config = {
+            type: 'bar',
+            data: data,
+            options: customOptions
+        };
+        var attempts = new Chart(
+            document.getElementById('attempts'),
+            config
+        );
+    </script>
+
+    <script>
+        customOptions = {
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                x: {
+                    grid: {
+                        display: false
+                    }
+                },
+                y: {
+                    grid: {
+                        display: false
+                    }
+                }
+            }
+        };
+        labels = ['@Html.Raw(string.Join("','", Model.DayStats.Select(x => x.Day)))'];
+        data = {
+            labels: labels,
+            datasets: [{
+                backgroundColor: 'rgb(251, 192, 45)',
+                data: [@Html.Raw(string.Join(",",Model.DayStats.Select(x => x.AverageSolveSeconds)))],
+            }]
+        };
+        config = {
+            type: 'line',
+            data: data,
+            options: customOptions
+        };
+        var solvetime = new Chart(
+            document.getElementById('solvetime'),
+            config
+        );
+    </script>
+} 

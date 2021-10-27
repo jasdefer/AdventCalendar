@@ -39,7 +39,7 @@ namespace AdventCalendarWebApp.Pages._2020.Igloo.TaskBoard
 
         public IActionResult OnGet(bool[] answer = null)
         {
-            if (!dayValidation.HasAccess(door))
+            if (!dayValidation.HasAccess2020(door))
             {
                 return RedirectToPage("Index", new { invalidDoor = door });
             }

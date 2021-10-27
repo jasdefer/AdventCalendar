@@ -1,0 +1,57 @@
+﻿@page
+@using AdventCalendarWebApp.Model;
+@model AdventCalendarWebApp.Pages._2021.WikiArticleGuesserModel
+@{
+    ViewData["Title"] = $"Door {Model.Day}";
+}
+<p>Try to guess a Wikipedia article based on random words of its content. With each wrong guess new hints appear.</p>
+<a asp-page="/Index" class="btn btn-outline-secondary mb-2">Go back</a>
+@if (Model.ValidationState == ValidationState.Correct)
+{
+    <div class="alert alert-success">
+        Yes, that is correct.
+    </div>
+    <div class="alert alert-dark">
+        The correct articles indeed is <i>@(WikiArticleGuesserModel.articles[Model.Index].Replace("_"," "))</i>.
+        It took you @Model.NumberOfGuesses guesses with @Model.NumberOfHints hints.
+        You spend @Model.SolveDuration.ToString(@"hh\:mm\:ss") to solve this one. 
+    </div>
+}
+else
+{
+    if(Model.ValidationState == ValidationState.Incorrect)
+    {
+        <div class="alert alert-danger">
+            No, your guess was incorrect.
+        </div>
+    }
+    if (Model.NumberOfGuesses > 0)
+    { 
+        <div class="alert alert-dark">
+            You have had @Model.NumberOfGuesses guess@(Model.NumberOfGuesses>1?"es":"") so far.
+        </div>
+    }
+    <form method="post">
+        <input type="hidden" asp-for="Day" />
+        <input type="hidden" asp-for="NumberOfHints" value="@Model.NumberOfHints" />
+        <input type="hidden" asp-for="NumberOfGuesses" value="@Model.NumberOfGuesses"/>
+        <input type="hidden" asp-for="StartOfGuessing" />
+        <div class="row">
+            <div class="col-lg-6 mt-2">
+                <input asp-for="Answer" type="text" class="form-control" />
+            </div>
+            <div class="col-lg-6 d-grid mt-2">
+                <input type="submit" class="btn btn-primary" />
+            </div>
+        </div>
+    </form>
+}
+<p class="mt-5">Which articles could these words be part of? Today's genre is <i>@(WikiArticleGuesserModel.Hints[Model.Index]).</i></p>
+<div class="row">
+    @for (int i = 0; i < Model.NumberOfHints; i++)
+    {
+        <div class="col-6 col-lg-4 text-center p-1">
+            <h2>@WikiArticleGuesserModel.Words[Model.Index][Model.NumberOfHints - i - 1]</h2>
+        </div>
+    }
+</div>

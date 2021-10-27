@@ -23,7 +23,7 @@ namespace AdventCalendarWebApp.Pages._2020.Hideout
             int? direction = null,
             bool back = false)
         {
-            if (!dayValidation.HasAccess(door))
+            if (!dayValidation.HasAccess2020(door))
             {
                 return RedirectToPage("Index", new { rejected = true });
             }

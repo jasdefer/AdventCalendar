@@ -18,7 +18,7 @@ namespace AdventCalendarWebApp.Pages._2020.Otis
         public string Answer { get; set; }
         public IActionResult OnGet(string answer)
         {
-            CanSolve = dayValidation.HasAccess(door);
+            CanSolve = dayValidation.HasAccess2020(door);
             if (!CanSolve || string.IsNullOrEmpty(answer))
             {
                 return Page();

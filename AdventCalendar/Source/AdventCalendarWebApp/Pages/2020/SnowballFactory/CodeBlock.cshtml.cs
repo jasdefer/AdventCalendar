@@ -15,7 +15,7 @@ namespace AdventCalendarWebApp.Pages._2020.SnowballFactory
 
         public CodeBlockModel(DayValidation dayValidation)
         {
-            CanSolve = dayValidation.HasAccess(door);
+            CanSolve = dayValidation.HasAccess2020(door);
         }
 
         public IActionResult OnGet(int? answer = null)
