@@ -27,13 +27,13 @@ namespace AdventCalendarWebApp.Pages._2021
             new string[]{ "Mathematics", "Bullfighting", "FC Bayern Munich", "Jousting", "Freight transport" },
             new string[]{ "Apple", "Liquefied natural gas", "Easel", "Cargo", "Headquarters" },
             new string[]{ "Algebra", "Military", "Ethics", "Crime", "Employment" },
-            new string[]{ "Company", "Astrid Lindgren", "The Thriving Cult of Greed and Power", "Money", "Democracy" },
+            new string[]{ "Hypercube", "Brexit","Dancing", "Dementia with Lewy bodies", "Flag of Belarus" },
             new string[]{ "Bank", "Depression (mood)", "Watergate scandal", "Journalism", "Computer security" },
         };
 
         public static readonly int[] CorrectOptions = new int[12]
         {
-            3,1,4,0,1,0,4,2,3,0,3,2
+            3,1,4,0,1,0,4,2,3,0,4,2
         };
 
         public static IReadOnlyList<IReadOnlyList<string>> Words = new string[12][]
@@ -48,7 +48,7 @@ namespace AdventCalendarWebApp.Pages._2021
             new string[]{ "team", "tier","successful","sextuple","red","titles"},
             new string[]{ "conveyed","covers","perishable","final","facility","designed","handling"},
             new string[]{ "broad", "form", "study", "thread", "groups", "medicine", "letters", "essential", "major", "applying", "values"},
-            new string[]{ "verifiable", "records", "taxes", "country", "systems", "services", "distinguished", "types", "accepted" },
+            new string[]{ "bisected","officials","referendum","occupation","historical","independence","hoist","introduced","staff" },
             new string[]{ "major", "time", "investigations", "grant ", "activities", "removed", "burglars", "articles", "resignation" }
         };
 

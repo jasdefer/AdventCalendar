@@ -29,6 +29,22 @@ namespace AdventCalendarWebApp.Pages._2021
             "Brush"
         };
 
+        public static readonly IReadOnlyList<string> Hints = new string[12]
+        {
+            "Person",
+            "Buildings and structures",
+            "Person",
+            "Activity",
+            "Location",
+            "Invention",
+            "Location",
+            "Invention",
+            "Person",
+            "Location",
+            "Invention",
+            "Tool",
+        };
+
         public static IReadOnlyList<IReadOnlyList<string>> Words = new string[12][]
         {
             new string[]{ "third","positions","controversial","incidents","return","driver","skiing","was","tens","before","including","ability","final","australian","suffered","appearance","season","brief","drivers","runnerup","former","signed","unesco","sustained","whom","periods","collisions","ralf","series","championship","involved","galvanise","success","lewis","rehabilitation","brother","williams","december","until","dollars","title","rest","ahead","medically","pushing","injury","placed","career","competed","teams","maintains","mercedes","september","decided","limit","regimen","second","retirement","won","receive","hospital","win","millions","formula","consecutive","several","grenoble","karting","born","being","sixth","pioneering","breaking","during","titles","laps","seventh","singleseater","moved","damon","listen","amongst","around","german","unprecedented","privately","beginning","villeneuve","races","very","grand","five","broken","hamiltonwhile","enjoyed","further","four","first","records","fitness","accident","june","coma","has","retired","induced","brain","prix","racing","same","ferrari","umax","others","after","severe","benetton","left","subsequent","fastest","junior","projects","feat","pole","home","seven","jointrecord","wins","charity","younger","mçael","made","struggling","hamilton","finishing","tied","finishes","sport","european","relocated","although","humanitarian","are","race","medical","later","since","car","treatment","university","twice","noted","held","donated","jacques","repeated","january","team","world","oneoff","hill","belgian","finish","jordan","podium","record","lausanne","ambassador","siblings","consecutively" },
