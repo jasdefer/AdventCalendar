@@ -53,14 +53,14 @@ namespace AdventCalendarWebApp
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSession();
-                app.UseMiddleware<StatisticLogger>();
             }
             else
             {
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            app.UseSession();
+            app.UseMiddleware<StatisticLogger>();
             app.UseStatusCodePagesWithReExecute("/Error/{0}");
             app.UseHttpsRedirection();
             app.UseStaticFiles();
