@@ -27,17 +27,21 @@ namespace AdventCalendarWebApp.Pages.Misc.Statistics
         public void OnGet()
         {
             var table = azureHelper.GetTableReference(configuration["StorageData:RequestTableName"]);
-            var query = new TableQuery<HttpRequestLog>();
+            var query = new TableQuery<HttpRequestLog>()
+                .OrderBy(nameof(HttpRequestLog.RequestTimestamp));
             var result = table.ExecuteQuery(query);
             var date = result.Min(x => x.RequestTimestamp).Date;
-            var max = result.Min(x => x.RequestTimestamp).Date;
+            var max = result.Max(x => x.RequestTimestamp).Date;
             var requests = new Dictionary<DateTime, int>();
             while (date <= max)
             {
                 requests.Add(date, 0);
                 date = date.AddDays(1);
             }
-            Requests = result.GroupBy(x => x.RequestTimestamp.Date).Select(y => new RequestsPerDay(y.Key, y.Count())).ToArray();
+            Requests = requests
+                .Select(x => new RequestsPerDay(x.Key, result.Where(y => y.RequestTimestamp.Date == x.Key).Count()))
+                .OrderBy(x => x.Day)
+                .ToArray();
         }
     }
 }
