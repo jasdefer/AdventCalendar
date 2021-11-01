@@ -80,7 +80,7 @@ namespace AdventCalendarWebApp.Pages._2021
             int numberOfGuesses = 0,
             DateTime? startOfGuessing = null)
         {
-            var hasAccess = dayValidation.HasAccess2020(day);
+            var hasAccess = dayValidation.HasAccess2021(day);
             if (day % 2 == 1 || !hasAccess)
             {
                 return NotFound();
