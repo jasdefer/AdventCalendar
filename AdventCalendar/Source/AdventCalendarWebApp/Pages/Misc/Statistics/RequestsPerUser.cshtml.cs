@@ -29,7 +29,11 @@ namespace AdventCalendarWebApp.Pages.Misc.Statistics
             var table = azureHelper.GetTableReference(configuration["StorageData:RequestTableName"]);
             var query = new TableQuery<HttpRequestLog>();
             var result = table.ExecuteQuery(query);
-            UrlRequests = result.GroupBy(x => x.UserId).Select(y => new UrlRequest(y.Key, y.Count())).ToArray();
+            UrlRequests = result
+                .GroupBy(x => x.UserId)
+                .Select(x => new UrlRequest(x.Key, x.Count()))
+                .OrderByDescending(x => x.NumberOfRequests)
+                .ToArray();
         }
     }
 }

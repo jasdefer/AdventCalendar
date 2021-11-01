@@ -45,7 +45,11 @@ namespace AdventCalendarWebApp.Pages.Misc.Statistics
                 requests.Add(date, 0);
                 date = date.AddDays(1);
             }
-            Requests = result.GroupBy(x => x.RequestTimestamp.Date).Select(y => new RequestsPerDay(y.Key, y.Count())).ToArray();
+            Requests = result
+                .GroupBy(x => x.RequestTimestamp.Date)
+                .Select(x => new RequestsPerDay(x.Key, x.Count()))
+                .OrderBy(x => x.Day)
+                .ToArray();
         }
     }
 }

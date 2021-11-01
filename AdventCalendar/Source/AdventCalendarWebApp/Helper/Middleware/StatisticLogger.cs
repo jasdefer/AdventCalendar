@@ -47,7 +47,6 @@ namespace AdventCalendarWebApp.Helper.Middleware
 
         private async Task AddLog(HttpContext context)
         {
-
             var userId = context.GetOrCreateUserId();
             var requestedUrl = UriHelper.GetDisplayUrl(context.Request);
             var requestedTimestamp = timeProvider.Now();

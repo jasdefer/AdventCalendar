@@ -39,7 +39,11 @@ namespace AdventCalendarWebApp.Pages.Misc.Statistics
                     .Where(TableQuery.GenerateFilterConditionForDate(nameof(HttpRequestLog.RequestTimestamp), QueryComparisons.LessThan, today));
             }
             var result = table.ExecuteQuery(query);
-            UrlRequests = result.GroupBy(x => x.BaseUrl).Select(y => new UrlRequest(y.Key, y.Count())).ToArray();
+            UrlRequests = result
+                .GroupBy(x => x.BaseUrl)
+                .Select(x => new UrlRequest(x.Key, x.Count()))
+                .OrderByDescending(x => x.NumberOfRequests)
+                .ToArray();
         }
     }
 }
