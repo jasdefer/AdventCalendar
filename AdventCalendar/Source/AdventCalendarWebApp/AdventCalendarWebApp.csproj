@@ -10,8 +10,12 @@
     <PackageId>AdventCalendarWebApp</PackageId>
     <Company />
     <Product>Advent Calendar</Product>
-    <Version>1.0.1</Version>
-    <PackageReleaseNotes>1.0.1
+    <Version>1.0.2</Version>
+    <PackageReleaseNotes>1.0.2
+Fixed logging middleware bug
+Atted a back button to each statistic view
+Orderd the results of some statistic views
+1.0.1
 Improved the access to the 2021 doors
 1.0.0
 Added the Wikipedia Advent calendar 2021
