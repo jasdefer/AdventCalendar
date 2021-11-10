@@ -18,9 +18,9 @@ jobs:
     - name: Install dependencies
       run: dotnet restore AdventCalendar
     - name: Build
-      run: dotnet build --configuration Release --no-restore AdventCalendar
+      run: dotnet build --configuration Release AdventCalendar
     - name: Test
-      run: dotnet test --no-restore --verbosity normal AdventCalendar
+      run: dotnet test --verbosity normal AdventCalendar
     - name: Publish
       run: |
         dotnet publish -c Release -o dotnetcorewebapp AdventCalendar
