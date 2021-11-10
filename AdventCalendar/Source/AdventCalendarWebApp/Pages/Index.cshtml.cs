@@ -7,7 +7,7 @@ namespace AdventCalendarWebApp.Pages;
 
 public class IndexModel : PageModel
 {
-    private static int[] DaysOrdered = Enumerable.Range(1, 24).ToArray();
+    private static readonly int[] DaysOrdered = Enumerable.Range(1, 24).ToArray();
     private readonly ITimeProvider timeProvider;
 
     public int[] Days { get; private set; }

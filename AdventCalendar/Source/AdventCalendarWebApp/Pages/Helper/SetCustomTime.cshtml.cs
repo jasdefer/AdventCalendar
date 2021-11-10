@@ -17,7 +17,7 @@ public class SetCustomTimeModel : PageModel
     public int? Index { get; set; }
     public ITimeProvider TimeProvider { get; set; }
 
-    private bool timeIsAdjustable;
+    private readonly bool timeIsAdjustable;
 
     public IActionResult OnGet(int? index = null)
     {

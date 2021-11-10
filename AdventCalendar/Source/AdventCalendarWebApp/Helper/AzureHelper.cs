@@ -8,7 +8,7 @@ namespace AdventCalendarWebApp.Helper;
 
 public class AzureHelper
 {
-    private string ConnectingString;
+    private readonly string ConnectingString;
     private readonly ILogger<AzureHelper> logger;
 
     public AzureHelper(IConfiguration configuration,
