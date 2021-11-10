@@ -1,4 +1,3 @@
-using AdventCalendarWebApp.Helper;
 using AdventCalendarWebApp.Model;
 using AdventCalendarWebApp.Pages._2021;
 using Microsoft.AspNetCore.Mvc;

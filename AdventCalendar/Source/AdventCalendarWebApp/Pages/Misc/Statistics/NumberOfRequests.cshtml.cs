@@ -1,4 +1,3 @@
-using AdventCalendarWebApp.Helper;
 using AdventCalendarWebApp.Helper.TimeProvider;
 using AdventCalendarWebApp.Model;
 using Microsoft.AspNetCore.Mvc.RazorPages;

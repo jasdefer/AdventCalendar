@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using System.Text;
+﻿using System.Text;
+using Microsoft.AspNetCore.Http;
 
 namespace AdventCalendarWebApp.Helper;
 

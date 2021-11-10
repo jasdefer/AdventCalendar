@@ -1,5 +1,4 @@
-﻿using AdventCalendarWebApp.Helper;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AdventCalendarWebApp.Pages._2020.Igloo.EastWing;

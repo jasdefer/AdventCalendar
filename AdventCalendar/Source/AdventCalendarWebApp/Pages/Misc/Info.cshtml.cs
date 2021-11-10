@@ -1,7 +1,7 @@
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.IO;
+﻿using System.IO;
 using System.Reflection;
 using System.Xml;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AdventCalendarWebApp.Pages.Misc;
 
@@ -14,7 +14,7 @@ public class InfoModel : PageModel
 
     public void OnGet()
     {
-        var assembly = typeof(Startup).Assembly;
+        var assembly = typeof(Program).Assembly;
         Version = assembly.GetName().Version.ToString();
         PageDescription = assembly.GetCustomAttribute<AssemblyDescriptionAttribute>().Description;
 
