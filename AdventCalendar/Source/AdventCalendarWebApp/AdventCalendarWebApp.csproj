@@ -55,6 +55,7 @@ Added the first 3 riddles and the core project infrastructure
 Initial release</PackageReleaseNotes>
     <PackageProjectUrl>https://github.com/jasdefer/AdventCalendar/</PackageProjectUrl>
     <PackageIcon>android-chrome-192x192.png</PackageIcon>
+    <RepositoryUrl>https://github.com/jasdefer/AdventCalendar/</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
