@@ -1,12 +1,11 @@
 ﻿using System;
 
-namespace AdventCalendarWebApp.Helper.TimeProvider
+namespace AdventCalendarWebApp.Helper.TimeProvider;
+
+public class UtcTimeProvider : ITimeProvider
 {
-    public class UtcTimeProvider : ITimeProvider
+    public DateTime Now()
     {
-        public DateTime Now()
-        {
-            return DateTime.UtcNow;
-        }
+        return DateTime.UtcNow;
     }
 }

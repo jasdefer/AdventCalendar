@@ -7,43 +7,42 @@ using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AdventCalendarWebApp.Pages.Misc.Statistics
+namespace AdventCalendarWebApp.Pages.Misc.Statistics;
+
+public class NumberOfRequestsModel : PageModel
 {
-    public class NumberOfRequestsModel : PageModel
+    public record UrlRequest(string BaseUrl, int NumberOfRequests);
+
+    private readonly AzureHelper azureHelper;
+    private readonly IConfiguration configuration;
+    private readonly ITimeProvider timeProvider;
+
+    public NumberOfRequestsModel(AzureHelper azureHelper,
+        IConfiguration configuration,
+        ITimeProvider timeProvider)
     {
-        public record UrlRequest(string BaseUrl, int NumberOfRequests);
+        this.azureHelper = azureHelper;
+        this.configuration = configuration;
+        this.timeProvider = timeProvider;
+    }
 
-        private readonly AzureHelper azureHelper;
-        private readonly IConfiguration configuration;
-        private readonly ITimeProvider timeProvider;
+    public IReadOnlyList<UrlRequest> UrlRequests { get; set; }
 
-        public NumberOfRequestsModel(AzureHelper azureHelper,
-            IConfiguration configuration,
-            ITimeProvider timeProvider)
+    public void OnGet()
+    {
+        var table = azureHelper.GetTableReference(configuration["StorageData:RequestTableName"]);
+        var today = timeProvider.Now().Date;
+        var query = new TableQuery<HttpRequestLog>();
+        if (today.Month == 12 && today.Day <= 24)
         {
-            this.azureHelper = azureHelper;
-            this.configuration = configuration;
-            this.timeProvider = timeProvider;
+            query = new TableQuery<HttpRequestLog>()
+                .Where(TableQuery.GenerateFilterConditionForDate(nameof(HttpRequestLog.RequestTimestamp), QueryComparisons.LessThan, today));
         }
-
-        public IReadOnlyList<UrlRequest> UrlRequests { get; set; }
-
-        public void OnGet()
-        {
-            var table = azureHelper.GetTableReference(configuration["StorageData:RequestTableName"]);
-            var today = timeProvider.Now().Date;
-            var query = new TableQuery<HttpRequestLog>();
-            if (today.Month == 12 && today.Day <= 24)
-            {
-                query = new TableQuery<HttpRequestLog>()
-                    .Where(TableQuery.GenerateFilterConditionForDate(nameof(HttpRequestLog.RequestTimestamp), QueryComparisons.LessThan, today));
-            }
-            var result = table.ExecuteQuery(query);
-            UrlRequests = result
-                .GroupBy(x => x.BaseUrl)
-                .Select(x => new UrlRequest(x.Key, x.Count()))
-                .OrderByDescending(x => x.NumberOfRequests)
-                .ToArray();
-        }
+        var result = table.ExecuteQuery(query);
+        UrlRequests = result
+            .GroupBy(x => x.BaseUrl)
+            .Select(x => new UrlRequest(x.Key, x.Count()))
+            .OrderByDescending(x => x.NumberOfRequests)
+            .ToArray();
     }
 }

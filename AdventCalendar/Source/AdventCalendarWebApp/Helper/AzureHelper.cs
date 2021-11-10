@@ -4,57 +4,56 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
 
-namespace AdventCalendarWebApp.Helper
+namespace AdventCalendarWebApp.Helper;
+
+public class AzureHelper
 {
-    public class AzureHelper
+    private string ConnectingString;
+    private readonly ILogger<AzureHelper> logger;
+
+    public AzureHelper(IConfiguration configuration,
+        ILogger<AzureHelper> logger)
     {
-        private string ConnectingString;
-        private readonly ILogger<AzureHelper> logger;
+        ConnectingString = configuration["AzureStorageConnectingString"];
+        this.logger = logger;
+    }
 
-        public AzureHelper(IConfiguration configuration,
-            ILogger<AzureHelper> logger)
+    public CloudTable GetTableReference(string tableName, bool createIfNotExists = true)
+    {
+        var account = CloudStorageAccount.Parse(ConnectingString);
+        var client = account.CreateCloudTableClient();
+
+        var table = client.GetTableReference(tableName);
+
+        if (createIfNotExists)
         {
-            ConnectingString = configuration["AzureStorageConnectingString"];
-            this.logger = logger;
+            table.CreateIfNotExists();
         }
 
-        public CloudTable GetTableReference(string tableName, bool createIfNotExists = true)
+        return table;
+    }
+
+    public async Task AddObjectAsync<T>(CloudTable table, T value) where T : ITableEntity
+    {
+        if (table == null)
         {
-            var account = CloudStorageAccount.Parse(ConnectingString);
-            var client = account.CreateCloudTableClient();
-
-            var table = client.GetTableReference(tableName);
-
-            if (createIfNotExists)
-            {
-                table.CreateIfNotExists();
-            }
-
-            return table;
+            throw new ArgumentNullException(nameof(table));
         }
 
-        public async Task AddObjectAsync<T>(CloudTable table, T value) where T : ITableEntity
-        {
-            if (table == null)
-            {
-                throw new ArgumentNullException(nameof(table));
-            }
+        TableOperation operation = TableOperation.InsertOrReplace(value);
+        await table.ExecuteAsync(operation);
+    }
 
-            TableOperation operation = TableOperation.InsertOrReplace(value);
-            await table.ExecuteAsync(operation);
+    public async Task AddObjectAsync<T>(string tableName, T value) where T : ITableEntity
+    {
+        try
+        {
+            var table = GetTableReference(tableName);
+            await AddObjectAsync(table, value);
         }
-
-        public async Task AddObjectAsync<T>(string tableName, T value) where T : ITableEntity
+        catch (Exception e)
         {
-            try
-            {
-                var table = GetTableReference(tableName);
-                await AddObjectAsync(table, value);
-            }
-            catch (Exception e)
-            {
-                logger.LogError($"Cannot add object to table storage '{tableName}'", e);
-            }
+            logger.LogError($"Cannot add object to table storage '{tableName}'", e);
         }
     }
 }

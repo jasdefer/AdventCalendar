@@ -1,9 +1,8 @@
-﻿namespace AdventCalendarWebApp.Model
+﻿namespace AdventCalendarWebApp.Model;
+
+public enum ValidationState
 {
-    public enum ValidationState
-    {
-        Correct,
-        Incorrect,
-        NotValidated
-    }
+    Correct,
+    Incorrect,
+    NotValidated
 }

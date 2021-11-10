@@ -4,39 +4,38 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Hosting;
 
-namespace AdventCalendarWebApp.Pages.Helper
+namespace AdventCalendarWebApp.Pages.Helper;
+
+public class SetCustomTimeModel : PageModel
 {
-    public class SetCustomTimeModel : PageModel
+    public SetCustomTimeModel(ITimeProvider timeProvider, IWebHostEnvironment env)
     {
-        public SetCustomTimeModel(ITimeProvider timeProvider, IWebHostEnvironment env)
+        TimeProvider = timeProvider;
+        timeIsAdjustable = env.IsDevelopment();
+    }
+
+    public int? Index { get; set; }
+    public ITimeProvider TimeProvider { get; set; }
+
+    private bool timeIsAdjustable;
+
+    public IActionResult OnGet(int? index = null)
+    {
+        if (!timeIsAdjustable ||
+            !(TimeProvider is DebugTimeProvider))
         {
-            TimeProvider = timeProvider;
-            timeIsAdjustable = env.IsDevelopment();
+            return NotFound();
         }
-
-        public int? Index { get; set; }
-        public ITimeProvider TimeProvider { get; set; }
-
-        private bool timeIsAdjustable;
-
-        public IActionResult OnGet(int? index = null)
+        if (!index.HasValue)
         {
-            if (!timeIsAdjustable ||
-                !(TimeProvider is DebugTimeProvider))
-            {
-                return NotFound();
-            }
-            if (!index.HasValue)
-            {
-                return Page();
-            }
-            if (index < 0 || index > 25)
-            {
-                index = 0;
-            }
-            DebugTimeProvider.DoorIndex = index.Value;
-            Index = index;
             return Page();
         }
+        if (index < 0 || index > 25)
+        {
+            index = 0;
+        }
+        DebugTimeProvider.DoorIndex = index.Value;
+        Index = index;
+        return Page();
     }
 }

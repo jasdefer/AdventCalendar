@@ -2,52 +2,51 @@ using AdventCalendarWebApp.Helper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace AdventCalendarWebApp.Pages._2020.Igloo.TaskBoard
+namespace AdventCalendarWebApp.Pages._2020.Igloo.TaskBoard;
+
+public class Note07Model : PageModel
 {
-    public class Note07Model : PageModel
+    private readonly DayValidation dayValidation;
+    private const int door = 7;
+
+    public Note07Model(DayValidation dayValidation)
     {
-        private readonly DayValidation dayValidation;
-        private const int door = 7;
+        this.dayValidation = dayValidation;
+    }
 
-        public Note07Model(DayValidation dayValidation)
+    public bool Solved { get; set; } = false;
+
+
+    [BindProperty]
+    public int? Answer { get; set; } = null;
+
+    public IActionResult OnGet(int? answer)
+    {
+        if (!dayValidation.HasAccess2020(door))
         {
-            this.dayValidation = dayValidation;
+            return RedirectToPage("Index", new { invalidDoor = door });
         }
-
-        public bool Solved { get; set; } = false;
-
-
-        [BindProperty]
-        public int? Answer { get; set; } = null;
-
-        public IActionResult OnGet(int? answer)
+        if (!answer.HasValue)
         {
-            if (!dayValidation.HasAccess2020(door))
-            {
-                return RedirectToPage("Index", new { invalidDoor = door });
-            }
-            if (!answer.HasValue)
-            {
-                return Page();
-            }
-            if (answer == 32)
-            {
-                Solved = true;
-            }
-            else if (answer == 25)
-            {
-                ModelState.AddModelError(string.Empty, $"Hm, {answer} is a good try, but it is too obvious. Aren't there more digits of the note?");
-            }
-            else
-            {
-                ModelState.AddModelError(string.Empty, $"No {answer} is incorrect.");
-            }
             return Page();
         }
-
-        public IActionResult OnPost()
+        if (answer == 32)
         {
-            return RedirectToPage("Note07", new { answer = Answer });
+            Solved = true;
         }
+        else if (answer == 25)
+        {
+            ModelState.AddModelError(string.Empty, $"Hm, {answer} is a good try, but it is too obvious. Aren't there more digits of the note?");
+        }
+        else
+        {
+            ModelState.AddModelError(string.Empty, $"No {answer} is incorrect.");
+        }
+        return Page();
+    }
+
+    public IActionResult OnPost()
+    {
+        return RedirectToPage("Note07", new { answer = Answer });
     }
 }

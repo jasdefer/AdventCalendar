@@ -8,14 +8,14 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace AdventCalendarWebApp.Pages._2021
+namespace AdventCalendarWebApp.Pages._2021;
+
+public class WikiArticleGuesserModel : PageModel
 {
-    public class WikiArticleGuesserModel : PageModel
+    public const int DefaultNumberOfHints = 5;
+    public const int NumberOfHintsPerTry = 3;
+    public static readonly IReadOnlyList<string> articles = new string[12]
     {
-        public const int DefaultNumberOfHints = 5;
-        public const int NumberOfHintsPerTry = 3;
-        public static readonly IReadOnlyList<string> articles = new string[12]
-        {
             "Michael_Schumacher",
             "Big_Ben",
             "Taylor_Swift",
@@ -28,10 +28,10 @@ namespace AdventCalendarWebApp.Pages._2021
             "Canada",
             "Computer",
             "Brush"
-        };
+    };
 
-        public static readonly IReadOnlyList<string> Hints = new string[12]
-        {
+    public static readonly IReadOnlyList<string> Hints = new string[12]
+    {
             "Person",
             "Buildings and structures",
             "Person",
@@ -44,10 +44,10 @@ namespace AdventCalendarWebApp.Pages._2021
             "Location",
             "Invention",
             "Tool",
-        };
+    };
 
-        public static IReadOnlyList<IReadOnlyList<string>> Words = new string[12][]
-        {
+    public static IReadOnlyList<IReadOnlyList<string>> Words = new string[12][]
+    {
             new string[]{ "third","positions","controversial","incidents","return","driver","skiing","was","tens","before","including","ability","final","australian","suffered","appearance","season","brief","drivers","runnerup","former","signed","unesco","sustained","whom","periods","collisions","ralf","series","championship","involved","galvanise","success","lewis","rehabilitation","brother","williams","december","until","dollars","title","rest","ahead","medically","pushing","injury","placed","career","competed","teams","maintains","mercedes","september","decided","limit","regimen","second","retirement","won","receive","hospital","win","millions","formula","consecutive","several","grenoble","karting","born","being","sixth","pioneering","breaking","during","titles","laps","seventh","singleseater","moved","damon","listen","amongst","around","german","unprecedented","privately","beginning","villeneuve","races","very","grand","five","broken","hamiltonwhile","enjoyed","further","four","first","records","fitness","accident","june","coma","has","retired","induced","brain","prix","racing","same","ferrari","umax","others","after","severe","benetton","left","subsequent","fastest","junior","projects","feat","pole","home","seven","jointrecord","wins","charity","younger","mçael","made","struggling","hamilton","finishing","tied","finishes","sport","european","relocated","although","humanitarian","are","race","medical","later","since","car","treatment","university","twice","noted","held","donated","jacques","repeated","january","team","world","oneoff","hill","belgian","finish","jordan","podium","record","lausanne","ambassador","siblings","consecutively" },
             new string[]{ "named","style","films","set","installation","westminster","repainting","rose","schedule","until","fourfaced","short","original","has","grade","include","nations","scotland","oversaw","renamed","were","end","england","heritage","chime","long","minutes","london","backup","diameter","elizabeth","shot","victorian","each","jubilee","remembrance","used","held","modifications","among","works","part","thistle","celebrations","repairing","boxing","reglazing","lighting","base","although","mechanism","stands","tower","quarter","uses","ireland","united","shamrock","exceptions","icon","renovation","name","tonnes","side","such","square","clock","work","origin","before","question","past","mark","climb","open","are","five","towers","striking","ground","electric","nickname","years","steps","building","hour","caunt","shields","tons","chiming","world","measuring","eve","often","northern","augustus","tolls","upgrading","improvements","tiles","official","after","roof","lift","featuring","palace","prominent","refer","bell","level","belfry","adding","extended","few","establishing","tall","dials","august","parliamentary","neogothic","was","located","pugin","began","motor","great","hall","bells","queen","may","diamond","largest","kingdom","since","sir","site","british","symbols","benjamin","accurate","champion","silent","wales","heavyweight","designed","fouryear","listed","democracy","north","weighs","originally","four","anniversary","represented","recognised","frequently","completed","feet","sunday","unesco","cultural","leek"},
             new string[]{ "genres","deal","successor","inspired","acclaimed","rolling","industry","grammy","debut","red","masters","billboards","fearless","riaa","speak","songwriting","alison","association","look","influences","back","next","knew","folk","fame","country","ever","after","teardrops","nashville","artists","indie","blended","documentaries","having","willow","shake","america","third","long","expanded","critically","americana","pop","personal","advocacy","contract","included","media","mtv","trouble","urban","many","ownership","topfive","sonyatv","featured","wins","records","folklore","cardigan","experiences","fourth","rights","woman","decade","greatest","forbes","guitar","worldwide","radio","singersongwriter","awards","beyond","during","electronic","lover","celebrity","guinness","singer","influence","chart","charttopping","incorporating","mainstream","contained","influential","rock","american","singles","lists","expired","experimented","brit","said","space","released","sound","certified","eighth","studio","album","crossover","such","bestselling","are","billboard","songwriter","dispute","miss","sold","sessions","coverage","fully","pond","including","diamond","often","various","six","widespread","december","song","shouldve","career","received","million","recognized","never","songs","rose","need","spawned","recording","year","praise","critical","further","stones","video","world","five","explored","born","fifth","topten","signed","belong","ranked","moved","artist","machine","music","philanthropic","bad","three","transitioned","made","alternative","albums","emmy","synthpop","eponymous","times","electropop","award","include","story","named","reputation","publishing","appeared","calm","blank","international","narrative","mine","aspiring","second","elements","songwriters","was","womens","evermore","has","big","hot","accolades"},
@@ -60,108 +60,107 @@ namespace AdventCalendarWebApp.Pages._2021
             new string[]{ "act","ranks","among","parliamentary","pacific","has","institutions","armed","multicultural","human","metropolitan","widening","ability","international","part","civil","many","along","ceded","parliament","secondlargest","formed","extend","country","conflicts","freedom","head","increasing","government","highest","appointed","later","total","level","command","british","western","globally","commonsand","federal","immigration","highly","product","transparency","france","was","impact","constitutional","relationship","significant","years","northward","confidence","toronto","square","upon","measurements","countrys","group","virtue","union","united","nearly","tenthlargest","nominal","representing","nations","arctic","kingdom","asiapacific","forum","several","council","french","percapita","beginning","three","development","statute","holds","culminated","prime","internationale","resources","area","major","indigenous","westminster","explored","began","oecd","dominion","provinces","peoples","organization","elected","north","highlighted","chiefly","thousands","quality","ministerwho","tradition","consequence","autonomy","networks","areas","are","century","wto","income","officially","colonies","longest","office","had","developed","culture","kilometres","severed","economy","long","various","atlantic","cooperation","serves","million","ten","continuously","inhabited","countries","covering","seventeenthhighest","bilingual","vancouver","expeditions","ethnically","commonwealth","land","advanced","making","miles","binational","groupings","abundant","welldeveloped","largescale","house","america","dependence","accretion","border","confederation","trade","southern","natural","ottawa","states","life","index","vestiges","education","governor","state","world","legal","largest","nato","organisation","monarchy","relying","ranking","through","francophonie","democracy","stretching","intergovernmental","diverse","liberties","realm","territories","process","worlds","settled","four","including","coast","monarch","ocean","capital","montreal","sixteenthhighest","economic","general","american" },
             new string[]{ "built","term","microprocessor","looms","form","design","conventionally","mice","are","since","developed","versatility","source","dramatically","typically","included","mobile","patterns","complete","early","automatically","machine","generalpurpose","predicted","specialized","aided","analog","speed","late","remote","includes","leading","during","specialpurpose","main","include","transistors","were","element","sequencing","least","increasing","personal","users","memory","sophisticated","cpu","type","control","perform","world","together","enable","both","did","calculating","internet","peripheral","smartphones","monitor","response","mosfet","consists","generic","doing","result","devices","stored","systems","logical","joystick","times","digital","mechanical","century","touchscreen","hardware","saved","cluster","revolution","ovens","manual","meant","arithmetic","broad","war","programmed","ancient","inputoutput","products","counts","first","machines","robots","people","external","linked","function","simple","information","chip","power","used","electronic","along","change","carries","wide","automate","chips","unit","modern","transistor","programs","sequences","industrial","consumer","central","known","order","technologies","network","microwave","law","integrated","operation","output","tasks","range","full","functions","allow","processing","semiconductor","carry","guiding","instruments","software","millions","retrieved","operating","sera","refer","equipment","rapid","etc","long","moores","followed","monolithic","screens","tedious","group","electrical","printers","keyboards","hundreds","more","needed","centuries","ever","circuit","operations","abacus","system","controls","calculations","factory","mos","sets","may","such","input","pace","siliconbased","links" },
             new string[]{ "hair","are","many","chosen","handle","common","withstand","such","dozen","affixed","versatile","depending","chemicals","either","varieties","generally","hazards","average","filaments","household","tool","several","purposes","basic","used","gripped","block","orientation","wire","may","contain","perpendicular","today","grooming","material","during","cleaning","bristles","corrosive","intended","surface","heat","finishing","abrasion","consists","both","parallel","painting","tools" },
-        };
+    };
 
-        private readonly DayValidation dayValidation;
-        private readonly AzureHelper azureHelper;
-        private readonly IConfiguration configuration;
-        private readonly ITimeProvider timeProvider;
+    private readonly DayValidation dayValidation;
+    private readonly AzureHelper azureHelper;
+    private readonly IConfiguration configuration;
+    private readonly ITimeProvider timeProvider;
 
-        public ValidationState ValidationState { get; private set; } = ValidationState.NotValidated;
+    public ValidationState ValidationState { get; private set; } = ValidationState.NotValidated;
 
-        [BindProperty]
-        public string Answer { get; set; }
-        [BindProperty]
-        public int NumberOfHints { get; set; }
-        [BindProperty]
-        public int Day { get; set; }
-        [BindProperty]
-        public int NumberOfGuesses { get; set; }
-        [BindProperty]
-        public DateTime StartOfGuessing { get; set; }
+    [BindProperty]
+    public string Answer { get; set; }
+    [BindProperty]
+    public int NumberOfHints { get; set; }
+    [BindProperty]
+    public int Day { get; set; }
+    [BindProperty]
+    public int NumberOfGuesses { get; set; }
+    [BindProperty]
+    public DateTime StartOfGuessing { get; set; }
 
-        public int Index => Day / 2;
-        public TimeSpan SolveDuration => timeProvider.Now() - StartOfGuessing;
+    public int Index => Day / 2;
+    public TimeSpan SolveDuration => timeProvider.Now() - StartOfGuessing;
 
-        public WikiArticleGuesserModel(DayValidation dayValidation,
-            AzureHelper azureHelper,
-            IConfiguration configuration,
-            ITimeProvider timeProvider)
+    public WikiArticleGuesserModel(DayValidation dayValidation,
+        AzureHelper azureHelper,
+        IConfiguration configuration,
+        ITimeProvider timeProvider)
+    {
+        this.dayValidation = dayValidation;
+        this.azureHelper = azureHelper;
+        this.configuration = configuration;
+        this.timeProvider = timeProvider;
+    }
+
+    public async Task<IActionResult> OnGet(int day,
+        int numberOfHints = DefaultNumberOfHints,
+        int numberOfGuesses = 0,
+        string answer = null,
+        DateTime? startOfGuessing = null)
+    {
+        Day = day;
+        var hasAccess = dayValidation.HasAccess2021(day);
+        if (day % 2 == 0 || !hasAccess)
         {
-            this.dayValidation = dayValidation;
-            this.azureHelper = azureHelper;
-            this.configuration = configuration;
-            this.timeProvider = timeProvider;
+            return NotFound();
         }
-
-        public async Task<IActionResult> OnGet(int day,
-            int numberOfHints = DefaultNumberOfHints,
-            int numberOfGuesses = 0,
-            string answer = null,
-            DateTime? startOfGuessing = null)
+        NumberOfHints = Math.Max(DefaultNumberOfHints, Math.Min(numberOfHints, Words[Index].Count - 1));
+        NumberOfGuesses = Math.Max(0, numberOfGuesses);
+        StartOfGuessing = startOfGuessing ?? timeProvider.Now();
+        if (string.IsNullOrEmpty(answer))
         {
-            Day = day;
-            var hasAccess = dayValidation.HasAccess2021(day);
-            if (day % 2 == 0 || !hasAccess)
-            {
-                return NotFound();
-            }
-            NumberOfHints = Math.Max(DefaultNumberOfHints, Math.Min(numberOfHints, Words[Index].Count - 1));
-            NumberOfGuesses = Math.Max(0, numberOfGuesses);
-            StartOfGuessing = startOfGuessing ?? timeProvider.Now();
-            if (string.IsNullOrEmpty(answer))
-            {
-                return Page();
-            }
-            NumberOfGuesses++;
-
-            if (answer.Trim().Equals(articles[Index].Replace("_", " "), StringComparison.InvariantCultureIgnoreCase))
-            {
-                ValidationState = ValidationState.Correct;
-            }
-            else
-            {
-                ValidationState = ValidationState.Incorrect;
-                NumberOfHints += NumberOfHintsPerTry;
-                NumberOfHints = Math.Min(NumberOfHints, Words[Index].Count);
-            }
-
-            Answer = answer;
-            await LogWikiArticleGuess();
-
             return Page();
         }
+        NumberOfGuesses++;
 
-        private async Task LogWikiArticleGuess()
+        if (answer.Trim().Equals(articles[Index].Replace("_", " "), StringComparison.InvariantCultureIgnoreCase))
         {
-            var userId = HttpContext.GetOrCreateUserId();
-            var wikiArticleGuess = new WikiArticleGuess()
+            ValidationState = ValidationState.Correct;
+        }
+        else
+        {
+            ValidationState = ValidationState.Incorrect;
+            NumberOfHints += NumberOfHintsPerTry;
+            NumberOfHints = Math.Min(NumberOfHints, Words[Index].Count);
+        }
+
+        Answer = answer;
+        await LogWikiArticleGuess();
+
+        return Page();
+    }
+
+    private async Task LogWikiArticleGuess()
+    {
+        var userId = HttpContext.GetOrCreateUserId();
+        var wikiArticleGuess = new WikiArticleGuess()
+        {
+            Day = Day,
+            Guess = Answer,
+            PartitionKey = userId,
+            RowKey = Guid.NewGuid().ToString(),
+            UserId = userId,
+            NumberOfGuesses = NumberOfGuesses,
+            NumberOfHints = NumberOfHints,
+            GuessTimestamp = timeProvider.Now(),
+            IsCorrect = ValidationState == ValidationState.Correct,
+            SolveDurationSeconds = SolveDuration.TotalSeconds
+        };
+        await azureHelper.AddObjectAsync(configuration["StorageData:2021WikiArticleGuessesTableName"], wikiArticleGuess);
+    }
+
+    public IActionResult OnPost()
+    {
+        return RedirectToPage("WikiArticleGuesser",
+            new
             {
-                Day = Day,
-                Guess = Answer,
-                PartitionKey = userId,
-                RowKey = Guid.NewGuid().ToString(),
-                UserId = userId,
-                NumberOfGuesses = NumberOfGuesses,
-                NumberOfHints = NumberOfHints,
-                GuessTimestamp = timeProvider.Now(),
-                IsCorrect = ValidationState == ValidationState.Correct,
-                SolveDurationSeconds = SolveDuration.TotalSeconds
-            };
-            await azureHelper.AddObjectAsync(configuration["StorageData:2021WikiArticleGuessesTableName"], wikiArticleGuess);
-        }
-
-        public IActionResult OnPost()
-        {
-            return RedirectToPage("WikiArticleGuesser",
-                new
-                {
-                    day = Day,
-                    numberOfHints = NumberOfHints,
-                    numberOfGuesses = NumberOfGuesses,
-                    answer = Answer,
-                    startOfGuessing = StartOfGuessing,
-                });
-        }
+                day = Day,
+                numberOfHints = NumberOfHints,
+                numberOfGuesses = NumberOfGuesses,
+                answer = Answer,
+                startOfGuessing = StartOfGuessing,
+            });
     }
 }
