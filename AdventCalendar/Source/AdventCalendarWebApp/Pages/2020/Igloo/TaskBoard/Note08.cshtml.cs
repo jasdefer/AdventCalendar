@@ -1,7 +1,6 @@
 using AdventCalendarWebApp.Helper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Linq;
 
 namespace AdventCalendarWebApp.Pages._2020.Igloo.TaskBoard;
 

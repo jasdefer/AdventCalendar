@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System;
 using System.IO;
 using System.Reflection;
 using System.Xml;

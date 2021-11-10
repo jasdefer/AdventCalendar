@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace AdventCalendarWebApp.Helper;
+﻿namespace AdventCalendarWebApp.Helper;
 
 public static class CompareHelper
 {

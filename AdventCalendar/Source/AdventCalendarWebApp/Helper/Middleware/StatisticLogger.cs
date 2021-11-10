@@ -3,9 +3,6 @@ using AdventCalendarWebApp.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Threading.Tasks;
 
 namespace AdventCalendarWebApp.Helper.Middleware;
 

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace AdventCalendarWebApp.Helper.TimeProvider;
+﻿namespace AdventCalendarWebApp.Helper.TimeProvider;
 
 public class DebugTimeProvider : ITimeProvider
 {
