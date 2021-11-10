@@ -1,11 +1,9 @@
-﻿using System;
+﻿namespace AdventCalendarWebApp.Helper.TimeProvider;
 
-namespace AdventCalendarWebApp.Helper.TimeProvider
+public static class Dates
 {
-    public static class Dates
+    public static readonly DateTime[] Doors2020 = new DateTime[]
     {
-        public static readonly DateTime[] Doors2020 = new DateTime[]
-        {
             new DateTime(2020, 11, 30),
             new DateTime(2020, 12, 1),
             new DateTime(2020, 12, 2),
@@ -31,10 +29,10 @@ namespace AdventCalendarWebApp.Helper.TimeProvider
             new DateTime(2020, 12, 22),
             new DateTime(2020, 12, 23),
             new DateTime(2020, 12, 24),
-        };
+    };
 
-        public static readonly DateTime[] Doors2021 = new DateTime[]
-        {
+    public static readonly DateTime[] Doors2021 = new DateTime[]
+    {
             new DateTime(2021, 11, 30),
             new DateTime(2021, 12, 1),
             new DateTime(2021, 12, 2),
@@ -61,6 +59,5 @@ namespace AdventCalendarWebApp.Helper.TimeProvider
             new DateTime(2021, 12, 23),
             new DateTime(2021, 12, 24),
             new DateTime(2021, 12, 25),
-        };
-    }
+    };
 }

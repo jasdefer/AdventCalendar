@@ -1,26 +1,24 @@
-using AdventCalendarWebApp.Helper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace AdventCalendarWebApp.Pages._2020.Igloo.TaskBoard
+namespace AdventCalendarWebApp.Pages._2020.Igloo.TaskBoard;
+
+public class Note12Model : PageModel
 {
-    public class Note12Model : PageModel
+    private readonly DayValidation dayValidation;
+    private const int door = 12;
+
+    public Note12Model(DayValidation dayValidation)
     {
-        private readonly DayValidation dayValidation;
-        private const int door = 12;
+        this.dayValidation = dayValidation;
+    }
 
-        public Note12Model(DayValidation dayValidation)
+    public IActionResult OnGet()
+    {
+        if (!dayValidation.HasAccess2020(door))
         {
-            this.dayValidation = dayValidation;
+            return RedirectToPage("Index", new { invalidDoor = door });
         }
-
-        public IActionResult OnGet()
-        {
-            if (!dayValidation.HasAccess2020(door))
-            {
-                return RedirectToPage("Index", new { invalidDoor = door });
-            }
-            return Page();
-        }
+        return Page();
     }
 }

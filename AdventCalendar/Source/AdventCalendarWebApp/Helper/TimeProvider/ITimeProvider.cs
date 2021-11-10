@@ -1,9 +1,6 @@
-﻿using System;
+﻿namespace AdventCalendarWebApp.Helper.TimeProvider;
 
-namespace AdventCalendarWebApp.Helper.TimeProvider
+public interface ITimeProvider
 {
-    public interface ITimeProvider
-    {
-        DateTime Now();
-    }
+    DateTime Now();
 }
