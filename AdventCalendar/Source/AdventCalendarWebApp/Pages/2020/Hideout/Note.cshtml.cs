@@ -1,26 +1,24 @@
-using AdventCalendarWebApp.Helper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace AdventCalendarWebApp.Pages._2020.Hideout
+namespace AdventCalendarWebApp.Pages._2020.Hideout;
+
+public class NoteModel : PageModel
 {
-    public class NoteModel : PageModel
+    private readonly DayValidation dayValidation;
+    private const int door = 17;
+
+    public NoteModel(DayValidation dayValidation)
     {
-        private readonly DayValidation dayValidation;
-        private const int door = 17;
+        this.dayValidation = dayValidation;
+    }
 
-        public NoteModel(DayValidation dayValidation)
+    public IActionResult OnGet()
+    {
+        if (!dayValidation.HasAccess2020(door))
         {
-            this.dayValidation = dayValidation;
+            return NotFound();
         }
-
-        public IActionResult OnGet()
-        {
-            if (!dayValidation.HasAccess2020(door))
-            {
-                return NotFound();
-            }
-            return Page();
-        }
+        return Page();
     }
 }

@@ -1,11 +1,10 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace AdventCalendarWebApp.Pages.Misc.Statistics
+namespace AdventCalendarWebApp.Pages.Misc.Statistics;
+
+public class IndexModel : PageModel
 {
-    public class IndexModel : PageModel
+    public void OnGet()
     {
-        public void OnGet()
-        {
-        }
     }
 }
