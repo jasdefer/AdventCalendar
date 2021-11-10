@@ -10,8 +10,11 @@
     <PackageId>AdventCalendarWebApp</PackageId>
     <Company />
     <Product>Advent Calendar</Product>
-    <Version>1.0.2</Version>
-    <PackageReleaseNotes>1.0.2
+    <Version>1.0.3</Version>
+    <PackageReleaseNotes>1.0.3
+Migrated to .NET 6
+Removed reduntant info page
+1.0.2
 Fixed logging middleware bug
 Atted a back button to each statistic view
 Orderd the results of some statistic views
@@ -50,6 +53,9 @@ Added all riddles until the 16th day
 Added the first 3 riddles and the core project infrastructure
 0.0.1
 Initial release</PackageReleaseNotes>
+    <PackageProjectUrl>https://github.com/jasdefer/AdventCalendar/</PackageProjectUrl>
+    <PackageIcon>android-chrome-192x192.png</PackageIcon>
+    <RepositoryUrl>https://github.com/jasdefer/AdventCalendar/</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
@@ -68,6 +74,13 @@ Initial release</PackageReleaseNotes>
 
   <ItemGroup>
     <Folder Include="wwwroot\images\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\android-chrome-192x192.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
