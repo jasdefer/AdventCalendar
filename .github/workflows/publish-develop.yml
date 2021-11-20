@@ -20,12 +20,8 @@ jobs:
 
       - name: Build with dotnet
         run: dotnet build --configuration Debug AdventCalendar
-      - name: TestFolder Listing
-        run: dir
-      - name: TestFolder Listing
-        run: dir AdventCalendar
       - name: dotnet publish
-        run: dotnet publish -c Debug -o ${{env.DOTNET_ROOT}}\AdventCalendar
+        run: dotnet publish -c Debug -o ${{env.DOTNET_ROOT}}\AdventCalendar\AdventCalendar.sln
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
