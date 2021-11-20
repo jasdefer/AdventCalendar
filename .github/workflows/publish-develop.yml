@@ -48,5 +48,5 @@ jobs:
         with:
           app-name: 'adventcalendartest'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_0B07436C053C4E72AC67A13404DD5913 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_75272C35A97E4E4CA92F51424D825A00 }}
           package: .
