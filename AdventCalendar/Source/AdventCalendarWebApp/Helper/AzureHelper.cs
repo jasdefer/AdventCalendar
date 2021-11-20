@@ -32,7 +32,7 @@ public class AzureHelper
         }
         catch (Exception e)
         {
-            logger.LogError($"Cannot get table reference for the table '{tableName}'. {e.Message}");
+            logger.LogError(e, "Cannot get table reference for the table '{tableName}'. Errormessage: {errorMessage}", tableName, e.Message);
             throw;
         }
     }
@@ -57,7 +57,7 @@ public class AzureHelper
         }
         catch (Exception e)
         {
-            logger.LogError($"Cannot add object to table storage '{tableName}'", e);
+            logger.LogError(e, "Cannot add object to table storage '{tableName}'. Error message: {errorMessage}", tableName, e.Message);
         }
     }
 }
