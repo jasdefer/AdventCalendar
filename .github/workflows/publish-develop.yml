@@ -20,7 +20,10 @@ jobs:
 
       - name: Build with dotnet
         run: dotnet build --configuration Debug AdventCalendar
-
+      - name: TestFolder Listing
+        run: dir
+      - name: TestFolder Listing
+        run: dir\AdventCalendar
       - name: dotnet publish
         run: dotnet publish -c Debug -o ${{env.DOTNET_ROOT}}\AdventCalendar
 
