@@ -23,8 +23,8 @@ public class AzureHelper
             var client = account.CreateCloudTableClient();
 
             var table = client.GetTableReference(tableName);
-
-            if (createIfNotExists)
+            var tableExists = table.Exists();
+            if (tableExists && createIfNotExists)
             {
                 table.CreateIfNotExists();
             }
