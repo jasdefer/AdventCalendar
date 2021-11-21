@@ -10,8 +10,11 @@
     <PackageId>AdventCalendarWebApp</PackageId>
     <Company />
     <Product>Advent Calendar</Product>
-    <Version>1.0.3</Version>
-    <PackageReleaseNotes>1.0.3
+    <Version>1.0.4</Version>
+    <PackageReleaseNotes>1.0.4
+Improved logging
+Fixed Azure Storage connection bug
+1.0.3
 Migrated to .NET 6
 Removed reduntant info page
 1.0.2
@@ -68,8 +71,9 @@ Initial release</PackageReleaseNotes>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.0" />
     <PackageReference Include="Microsoft.Azure.Cosmos.Table" Version="1.0.8" />
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.11.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
   <ItemGroup>
