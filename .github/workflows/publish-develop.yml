@@ -1,52 +1,35 @@
-name: Publish to Azure
-
-on:
-  push:
-    branches: [ develop ]
-
-
+name: Build and deploy .NET application to Web App adventcalendartest
+env:
+  AZURE_WEBAPP_NAME: adventcalendartest
+  AZURE_WEBAPP_PACKAGE_PATH: Source\AdventCalendarWebApp\published
+  CONFIGURATION: Debug
+  DOTNET_CORE_VERSION: 6.0.x
+  WORKING_DIRECTORY: Source\AdventCalendarWebApp
 jobs:
   build:
     runs-on: windows-latest
-
     steps:
-      - uses: actions/checkout@v2
-
-      - name: Set up .NET Core
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: '6.0.x'
-          include-prerelease: true
-
-      - name: Build with dotnet
-        run: dotnet build --configuration Debug AdventCalendar
-      - name: dotnet publish
-        run: dotnet publish -c Debug -o ${{env.DOTNET_ROOT}}/AdventCalendar AdventCalendar
-
-      - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v2
-        with:
-          name: .net-app
-          path: ${{env.DOTNET_ROOT}}/AdventCalendar
-
-  deploy:
-    runs-on: windows-latest
-    needs: build
-    environment:
-      name: 'Production'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-
-    steps:
-      - name: Download artifact from build job
-        uses: actions/download-artifact@v2
-        with:
-          name: .net-app
-
-      - name: Deploy to Azure Web App
-        id: deploy-to-webapp
-        uses: azure/webapps-deploy@v2
-        with:
-          app-name: 'adventcalendartest'
-          slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_75272C35A97E4E4CA92F51424D825A00 }}
-          package: .
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
+    - name: Restore
+      run: dotnet restore "${{ env.WORKING_DIRECTORY }}"
+    - name: Build
+      run: dotnet build "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-restore
+    - name: Test
+      run: dotnet test "${{ env.WORKING_DIRECTORY }}" --no-build
+    - name: Publish
+      run: dotnet publish "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"
+    - name: Deploy to Azure WebApp
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: ${{ env.AZURE_WEBAPP_NAME }}
+        publish-profile: ${{ secrets.ADVENTCALENDARTEST_FFFF }}
+        package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+    - name: Publish Artifacts
+      uses: actions/upload-artifact@v1.0.0
+      with:
+        name: webapp
+        path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
