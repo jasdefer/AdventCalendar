@@ -4,30 +4,37 @@ on:
   push:
     tags:
       - '*.*.*'
-
+env:
+  AZURE_WEBAPP_NAME: adventriddles
+  AZURE_WEBAPP_PACKAGE_PATH: Source\AdventCalendarWebApp\published
+  CONFIGURATION: Release
+  DOTNET_CORE_VERSION: 6.0.x
+  WORKING_DIRECTORY: AdventCalendar\Source\AdventCalendarWebApp
 jobs:
   build:
-
-    runs-on: ubuntu-latest
-
+    runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Setup .NET Core
+    - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: '6.0.x'
-    - name: Install dependencies
-      run: dotnet restore AdventCalendar
+        dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
+    - name: Restore
+      run: dotnet restore "${{ env.WORKING_DIRECTORY }}"
     - name: Build
-      run: dotnet build --configuration Release --no-restore AdventCalendar
+      run: dotnet build "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-restore
     - name: Test
-      run: dotnet test --no-restore --verbosity normal AdventCalendar
+      run: dotnet test "${{ env.WORKING_DIRECTORY }}" --no-build
     - name: Publish
-      run: |
-        dotnet publish -c Release -o dotnetcorewebapp AdventCalendar
-    - name: 'Run Azure webapp deploy action using publish profile credentials'
-      uses: azure/webapps-deploy@v1
-      with: 
-        app-name: AdventRiddles # Web app name on Azure
-        publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE_ADVENT_CALENDAR_MASTER }}
-        package: './dotnetcorewebapp' 
+      run: dotnet publish "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"
+    - name: Deploy to Azure WebApp
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: ${{ env.AZURE_WEBAPP_NAME }}
+        publish-profile: ${{ secrets.ADVENTCALENDARTEST_FFFF }}
+        package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+    - name: Publish Artifacts
+      uses: actions/upload-artifact@v1.0.0
+      with:
+        name: webapp
+        path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
