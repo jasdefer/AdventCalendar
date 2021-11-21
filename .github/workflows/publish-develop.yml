@@ -1,4 +1,7 @@
 name: Build and deploy .NET application to Web App adventcalendartest
+on:
+  push:
+    branches: [ develop ]
 env:
   AZURE_WEBAPP_NAME: adventcalendartest
   AZURE_WEBAPP_PACKAGE_PATH: Source\AdventCalendarWebApp\published
