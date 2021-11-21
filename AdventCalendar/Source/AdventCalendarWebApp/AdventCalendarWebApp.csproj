@@ -10,8 +10,10 @@
     <PackageId>AdventCalendarWebApp</PackageId>
     <Company />
     <Product>Advent Calendar</Product>
-    <Version>1.0.4</Version>
-    <PackageReleaseNotes>1.0.4
+    <Version>1.0.5</Version>
+    <PackageReleaseNotes>1.0.5
+Fixed GitHub secret names
+1.0.4
 Improved logging
 Fixed Azure Storage connection bug
 1.0.3
