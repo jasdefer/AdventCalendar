@@ -1,4 +1,4 @@
-using AdventCalendarWebApp.Model;
+﻿using AdventCalendarWebApp.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Azure.Cosmos.Table;
@@ -25,6 +25,7 @@ public class WikiArticleGuessesModel : PageModel
 
     public IReadOnlyList<GuessData> Guesses { get; set; }
     public TimeSpan AverageSolveDuration { get; set; }
+    public TimeSpan MedianSolveDuration { get; set; }
     public int NumberOfCorrectSolutions { get; set; }
     public int Day { get; set; }
 
@@ -40,7 +41,11 @@ public class WikiArticleGuessesModel : PageModel
         var query = new TableQuery<WikiArticleGuess>()
             .Where($"{nameof(WikiArticleGuess.Day)} eq {day}");
         var result = table.ExecuteQuery(query).ToArray();
-        Guesses = result.GroupBy(x => x.Guess).Select(y => new GuessData(y.Key, y.Count())).ToArray();
+        Guesses = result
+            .GroupBy(x => x.Guess.ToLowerInvariant())
+            .Select(y => new GuessData(y.Key, y.Count()))
+            .OrderByDescending(x => x.NumberOfGuesses)
+            .ToArray();
         var durations = result.Where(x => x.IsCorrect &&
         x.SolveDurationSeconds >= 2 &&
         x.SolveDurationSeconds <= 3 * 60 * 60)
@@ -49,6 +54,7 @@ public class WikiArticleGuessesModel : PageModel
         if (durations.Length > 0)
         {
             AverageSolveDuration = TimeSpan.FromSeconds(Math.Round(durations.Average()));
+            MedianSolveDuration = TimeSpan.FromSeconds(durations.OrderBy(x => x).ElementAt(durations.Length/2));
         }
         NumberOfCorrectSolutions = result.Where(x => x.IsCorrect).GroupBy(x => x.UserId).Count();
         return Page();
