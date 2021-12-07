@@ -10,8 +10,11 @@
     <PackageId>AdventCalendarWebApp</PackageId>
     <Company />
     <Product>Advent Calendar</Product>
-    <Version>1.0.5</Version>
-    <PackageReleaseNotes>1.0.5
+    <Version>1.0.6</Version>
+    <PackageReleaseNotes>1.0.6
+Improved statistic pages
+Added my 2021 results statistic page
+1.0.5
 Fixed GitHub secret names
 1.0.4
 Improved logging
