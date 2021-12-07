@@ -13,12 +13,28 @@
             <canvas id="attempts"></canvas>
         </div>
     </div>
+    <div class="col-lg-10">
+        <p>
+            See the average and medium numbers of hints needed before solving correctly.
+        </p>
+        <div>
+            <canvas id="guesses"></canvas>
+        </div>
+    </div>
     <div class="col-lg-10 mt-5">
         <p>
             See the average solve time for each day.
         </p>
         <div>
             <canvas id="solvetime"></canvas>
+        </div>
+    </div>
+    <div class="col-lg-10 mt-5">
+        <p>
+            See the median solve time for each day.
+        </p>
+        <div>
+            <canvas id="solvetimemedian"></canvas>
         </div>
     </div>
 </div>
@@ -75,6 +91,51 @@
         customOptions = {
             plugins: {
                 legend: {
+                    display: true
+                }
+            },
+            scales: {
+                x: {
+                    grid: {
+                        display: false
+                    }
+                },
+                y: {
+                    grid: {
+                        display: false
+                    }
+                }
+            }
+        };
+        var labels = ['@Html.Raw(string.Join("','", Model.DayStats.Select(x => x.Day)))'];
+        var data = {
+            labels: labels,
+            datasets: [{
+                label:"Average number of guesses",
+                backgroundColor: 'rgb(251, 192, 45)',
+                data: [@Html.Raw(string.Join(",",Model.DayStats.Select(x => x.AverageNumberOfGuesses)))],
+            },
+                {
+                label:"Median number of guesses",
+                backgroundColor: 'rgb(45, 103, 251)',
+                data: [@Html.Raw(string.Join(",",Model.DayStats.Select(x => x.MedianNumberOfGuesses)))],
+            }]
+        };
+        var config = {
+            type: 'bar',
+            data: data,
+            options: customOptions
+        };
+        var attempts = new Chart(
+            document.getElementById('guesses'),
+            config
+        );
+    </script>
+
+    <script>
+        customOptions = {
+            plugins: {
+                legend: {
                     display: false
                 }
             },
@@ -106,6 +167,45 @@
         };
         var solvetime = new Chart(
             document.getElementById('solvetime'),
+            config
+        );
+    </script>
+
+    <script>
+        customOptions = {
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                x: {
+                    grid: {
+                        display: false
+                    }
+                },
+                y: {
+                    grid: {
+                        display: false
+                    }
+                }
+            }
+        };
+        labels = ['@Html.Raw(string.Join("','", Model.DayStats.Select(x => x.Day)))'];
+        data = {
+            labels: labels,
+            datasets: [{
+                backgroundColor: 'rgb(251, 192, 45)',
+                data: [@Html.Raw(string.Join(",",Model.DayStats.Select(x => x.MedianSolveSeconds)))],
+            }]
+        };
+        config = {
+            type: 'line',
+            data: data,
+            options: customOptions
+        };
+        var solvetime = new Chart(
+            document.getElementById('solvetimemedian'),
             config
         );
     </script>

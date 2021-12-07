@@ -1,4 +1,4 @@
-using AdventCalendarWebApp.Model;
+﻿using AdventCalendarWebApp.Model;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Azure.Cosmos.Table;
 using Microsoft.Extensions.Configuration;
@@ -8,6 +8,7 @@ namespace AdventCalendarWebApp.Pages.Misc.Statistics;
 public class RequestsOverTimeModel : PageModel
 {
     public record RequestsPerDay(DateTime Day, int NumberOfRequests);
+    public record UsersPerDay(DateTime Day, int NumberOfUsers);
 
     private readonly AzureHelper azureHelper;
     private readonly IConfiguration configuration;
@@ -20,6 +21,7 @@ public class RequestsOverTimeModel : PageModel
     }
 
     public IReadOnlyList<RequestsPerDay> Requests { get; set; }
+    public IReadOnlyList<UsersPerDay> Users { get; set; }
     public void OnGet()
     {
         var table = azureHelper.GetTableReference(configuration["StorageData:RequestTableName"]);
@@ -36,6 +38,10 @@ public class RequestsOverTimeModel : PageModel
         }
         Requests = requests
             .Select(x => new RequestsPerDay(x.Key, result.Where(y => y.RequestTimestamp.Date == x.Key).Count()))
+            .OrderBy(x => x.Day)
+            .ToArray();
+        Users = requests
+            .Select(x => new UsersPerDay(x.Key, result.Where(y => y.RequestTimestamp.Date == x.Key).Select(y => y.UserId).Distinct().Count()))
             .OrderBy(x => x.Day)
             .ToArray();
     }

@@ -1,0 +1,25 @@
+﻿@page
+@model AdventCalendarWebApp.Pages.Misc.Statistics._2021.MyResultsModel
+@{
+    ViewData["Title"] = $"Overview of my 2021 Advent calendar interactions";
+}
+<a asp-page="/Misc/Statistics/Index" class="btn btn-outline-secondary mb-3">Back</a>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Day</th>
+            <th>Answer</th>
+            <th>Solve duration</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var stat in Model.DayStats)
+        {
+            <tr class="table-@(stat.IsCorrect?"success":"warning")">
+                <td>@stat.Day</td>
+                <td>@stat.Answer</td>
+                <td>@stat.SolveDuration</td>
+            </tr>
+        }
+    </tbody>
+</table>
