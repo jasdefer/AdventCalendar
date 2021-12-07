@@ -1,4 +1,4 @@
-using AdventCalendarWebApp.Model;
+﻿using AdventCalendarWebApp.Model;
 using AdventCalendarWebApp.Pages._2021;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -44,6 +44,7 @@ public class WikiPagePicksModel : PageModel
         Picks = result
             .GroupBy(x => x.Pick)
             .Select(y => new PickData(WikiPagePickerModel.OptionStrings[day / 2 - 1][y.Key], y.Count()))
+            .OrderByDescending(x => x.NumberOfAttempts)
             .ToArray();
         var durations = result.Where(x => x.IsCorrect &&
         x.SolveDurationSeconds >= 2 &&
