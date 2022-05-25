@@ -5,7 +5,7 @@
     ViewData["Title"] = $"Door {Model.Day}";
 }
 <p>Try to guess a Wikipedia article based on random words of its content. With each wrong guess new hints appear.</p>
-<a asp-page="/Index" class="btn btn-outline-secondary mb-2">Go back</a>
+<a asp-page="Index" class="btn btn-outline-secondary mb-2">Go back</a>
 @if (Model.ValidationState == ValidationState.Correct)
 {
     <div class="alert alert-success">

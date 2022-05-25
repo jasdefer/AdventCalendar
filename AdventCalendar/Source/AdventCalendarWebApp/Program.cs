@@ -1,5 +1,4 @@
-﻿using AdventCalendarWebApp.Helper.Middleware;
-using AdventCalendarWebApp.Helper.TimeProvider;
+﻿using AdventCalendarWebApp.Helper.TimeProvider;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,14 +11,13 @@ builder.Services.AddRazorPages()
     .AddRazorRuntimeCompilation();
 if (builder.Environment.IsDevelopment())
 {
-    builder.Services.AddTransient<ITimeProvider, DebugTimeProvider>();
+    builder.Services.AddTransient<ITimeProvider, UtcTimeProvider>();
 }
 else
 {
     builder.Services.AddTransient<ITimeProvider, UtcTimeProvider>();
 }
 builder.Services.AddTransient<DayValidation>();
-builder.Services.AddTransient<AzureHelper>();
 builder.Services.AddDistributedMemoryCache();
 
 builder.Services.AddSession(options =>
@@ -40,7 +38,6 @@ else
     app.UseHsts();
 }
 app.UseSession();
-app.UseMiddleware<StatisticLogger>();
 app.UseStatusCodePagesWithReExecute("/Error/{0}");
 app.UseHttpsRedirection();
 app.UseStaticFiles();
